@@ -69,11 +69,22 @@ export const Button: React.FC<ButtonProps> = ({
   const getPadding = () => {
     switch (size) {
       case 'sm':
-        return {paddingVertical: 8, paddingHorizontal: 12};
+        return {paddingVertical: 10, paddingHorizontal: 16};
       case 'lg':
-        return {paddingVertical: 16, paddingHorizontal: 24};
+        return {paddingVertical: 18, paddingHorizontal: 32};
       default: // md
-        return {paddingVertical: 12, paddingHorizontal: 16};
+        return {paddingVertical: 14, paddingHorizontal: 24};
+    }
+  };
+
+  const getHeight = () => {
+    switch (size) {
+      case 'sm':
+        return 36;
+      case 'lg':
+        return 56;
+      default: // md
+        return 46;
     }
   };
 
@@ -92,11 +103,13 @@ export const Button: React.FC<ButtonProps> = ({
     styles.button,
     {
       backgroundColor: getBackgroundColor(),
-      ...getPadding(),
+      height: getHeight(),
       width: fullWidth ? '100%' : 'auto',
+      minWidth: size === 'sm' ? 100 : size === 'lg' ? 160 : 130,
       opacity: disabled ? 0.5 : 1,
-      borderWidth: variant === 'outline' ? 1 : 0,
+      borderWidth: variant === 'outline' ? 2 : 0,
       borderColor: variant === 'outline' ? theme.primary : undefined,
+      ...getPadding(),
     },
     style,
   ];
@@ -113,6 +126,7 @@ export const Button: React.FC<ButtonProps> = ({
     <TouchableOpacity
       onPress={onPress}
       disabled={disabled || isLoading}
+      activeOpacity={0.7}
       style={buttonStyles}>
       {isLoading ? (
         <ActivityIndicator
@@ -134,16 +148,25 @@ export const Button: React.FC<ButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 8,
+    borderRadius: 12,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   text: {
-    fontFamily: 'Poppins',
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
+    textAlign: 'center',
+    letterSpacing: 0.5,
   },
   icon: {
-    marginRight: 8,
+    marginRight: 10,
   },
 });
