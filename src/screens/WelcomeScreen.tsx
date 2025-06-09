@@ -1,36 +1,72 @@
 import React from 'react';
-import {View, Text, Image, SafeAreaView} from 'react-native';
-import {useTheme} from '../theme/ThemeContext';
+import {View, Text} from 'react-native';
+import {useTheme} from '../theme/ThemeProvider';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {LandingStackParamList} from '../navigation/types';
 import {Button} from '../components/Button';
+import {ScreenWrapper} from '../components/layout/ScreenWrapper';
 
 type WelcomeScreenProps = {
   navigation: NativeStackNavigationProp<LandingStackParamList, 'Welcome'>;
 };
 
 export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({navigation}) => {
-  const {toggleTheme} = useTheme();
+  const {toggleTheme, theme} = useTheme();
 
   return (
-    <SafeAreaView className="flex-1 bg-background">
-      <View className="flex-1 items-center justify-center p-6 animate-in">
-        <View className="items-center space-y-6 w-full max-w-sm">
+    <ScreenWrapper>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 24,
+        }}>
+        <View
+          style={{alignItems: 'center', gap: 24, width: '100%', maxWidth: 350}}>
           {/* Logo placeholder - replace with your actual logo */}
-          <View className="h-24 w-24 rounded-full bg-primary items-center justify-center mb-4">
-            <Text className="text-3xl font-bold text-primary-foreground">
+          <View
+            style={{
+              height: 96,
+              width: 96,
+              borderRadius: 48,
+              backgroundColor: theme.primary,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: 16,
+            }}>
+            <Text
+              style={{
+                fontSize: 32,
+                fontWeight: 'bold',
+                color: theme.primaryForeground,
+              }}>
               K
             </Text>
           </View>
 
-          <View className="items-center space-y-2">
-            <Text className="text-4xl font-bold text-foreground">Kwickly</Text>
-            <Text className="text-xl text-muted-foreground text-center">
+          <View style={{alignItems: 'center', gap: 8}}>
+            <Text
+              style={{
+                fontSize: 36,
+                fontWeight: 'bold',
+                color: theme.foreground,
+                fontFamily: 'Poppins-Bold',
+              }}>
+              Kwickly
+            </Text>
+            <Text
+              style={{
+                fontSize: 20,
+                color: theme.mutedForeground,
+                textAlign: 'center',
+                fontFamily: 'Poppins',
+              }}>
               Restaurant POS Admin
             </Text>
           </View>
 
-          <View className="w-full space-y-4 mt-8">
+          <View style={{width: '100%', gap: 16, marginTop: 32}}>
             <Button
               label="Get Started"
               onPress={() => navigation.navigate('Login')}
@@ -49,6 +85,6 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({navigation}) => {
           </View>
         </View>
       </View>
-    </SafeAreaView>
+    </ScreenWrapper>
   );
 };
