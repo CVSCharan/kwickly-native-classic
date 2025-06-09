@@ -17,6 +17,8 @@ import {
 import {DashboardScreen} from '../screens/authScreens/DashboardScreen';
 import {OrdersScreen} from '../screens/authScreens/OrdersScreen';
 import {SettingsScreen} from '../screens/authScreens/SettingsScreen';
+import {ProfileScreen} from '../screens/authScreens/ProfileScreen';
+import {NotificationsScreen} from '../screens/authScreens/NotificationsScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useThemeStore} from '../store/useThemeStore';
 import {useThemeAssets} from '../hooks/useThemeAssets';
@@ -65,7 +67,9 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
             style={[styles.drawerSectionTitle, {color: theme.mutedForeground}]}>
             ACCOUNT
           </Text>
-          <TouchableOpacity style={styles.drawerItem} onPress={() => {}}>
+          <TouchableOpacity
+            style={styles.drawerItem}
+            onPress={() => props.navigation.navigate('Profile')}>
             <Icon
               name="person-outline"
               size={wp('5%')}
@@ -75,7 +79,9 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
               Profile
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.drawerItem} onPress={() => {}}>
+          <TouchableOpacity
+            style={styles.drawerItem}
+            onPress={() => props.navigation.navigate('Notifications')}>
             <Icon
               name="notifications-outline"
               size={wp('5%')}
@@ -159,6 +165,28 @@ export const DrawerNavigator = () => {
           title: 'Settings',
           drawerIcon: ({color}) => (
             <Icon name="settings-outline" size={wp('5%')} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          title: 'Profile',
+          drawerItemStyle: {height: 0},
+          drawerIcon: ({color}) => (
+            <Icon name="person-outline" size={wp('5%')} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Notifications"
+        component={NotificationsScreen}
+        options={{
+          title: 'Notifications',
+          drawerItemStyle: {height: 0},
+          drawerIcon: ({color}) => (
+            <Icon name="notifications-outline" size={wp('5%')} color={color} />
           ),
         }}
       />

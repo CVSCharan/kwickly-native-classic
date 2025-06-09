@@ -12,6 +12,8 @@ export type DrawerParamList = {
   Dashboard: undefined;
   Orders: undefined;
   Settings: undefined;
+  Profile: undefined;
+  Notifications: undefined;
 };
 
 export type TabParamList = {
