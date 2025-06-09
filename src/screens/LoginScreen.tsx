@@ -7,6 +7,7 @@ import {Input} from '../components/Input';
 import {Button} from '../components/Button';
 import {Card} from '../components/Card';
 import {useThemeStore} from '../store/useThemeStore';
+import {useAuthStore} from '../store/useAuthStore';
 
 type LoginScreenProps = {
   navigation: NativeStackNavigationProp<LandingStackParamList, 'Login'>;
@@ -20,6 +21,7 @@ const TEST_CREDENTIALS = {
 
 export const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
   const theme = useThemeStore(state => state.theme);
+  const setAuthenticated = useAuthStore(state => state.setAuthenticated);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -46,14 +48,10 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
           password === TEST_CREDENTIALS.password
         ) {
           console.log('Login successful with test credentials');
-          navigation.reset({
-            index: 0,
-            routes: [{name: 'Dashboard'}],
-          });
+          setAuthenticated(true); // This will trigger the switch to AuthStack
         } else {
           console.log('Login attempt:', {email, password});
           // Here you would typically show an error for invalid credentials
-          // For now, we'll just log it
           console.log('Invalid credentials');
         }
       }, 1500);
