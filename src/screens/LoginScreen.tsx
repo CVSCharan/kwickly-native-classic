@@ -1,16 +1,19 @@
 import React, {useState} from 'react';
-import {View, Text, SafeAreaView, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {LandingStackParamList} from '../navigation/types';
 import {Input} from '../components/Input';
 import {Button} from '../components/Button';
 import {Card} from '../components/Card';
+import {useThemeStore} from '../store/useThemeStore';
 
 type LoginScreenProps = {
   navigation: NativeStackNavigationProp<LandingStackParamList, 'Login'>;
 };
 
 export const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
+  const theme = useThemeStore(state => state.theme);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -37,16 +40,19 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-background">
-      <View className="flex-1 p-6 justify-center animate-in">
-        <View className="items-center mb-8">
-          <Text className="text-3xl font-bold text-foreground">Welcome Back</Text>
-          <Text className="text-muted-foreground mt-2 text-center">
+    <SafeAreaView
+      style={[styles.container, {backgroundColor: theme.background}]}>
+      <View style={styles.content}>
+        <View style={styles.header}>
+          <Text style={[styles.title, {color: theme.foreground}]}>
+            Welcome Back
+          </Text>
+          <Text style={[styles.subtitle, {color: theme.mutedForeground}]}>
             Sign in to your account to continue
           </Text>
         </View>
 
-        <Card className="p-6">
+        <Card style={styles.card}>
           <Input
             label="Email"
             placeholder="Enter your email"
@@ -66,8 +72,10 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
             error={errors.password}
           />
 
-          <TouchableOpacity className="self-end mb-4">
-            <Text className="text-sm text-primary">Forgot Password?</Text>
+          <TouchableOpacity style={styles.forgotPassword}>
+            <Text style={[styles.forgotPasswordText, {color: theme.primary}]}>
+              Forgot Password?
+            </Text>
           </TouchableOpacity>
 
           <Button
@@ -79,13 +87,66 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
           />
         </Card>
 
-        <View className="flex-row justify-center mt-6">
-          <Text className="text-muted-foreground">Don't have an account? </Text>
-          <TouchableOpacity>
-            <Text className="text-primary font-medium">Sign Up</Text>
+        <View style={styles.footer}>
+          <Text style={[styles.footerText, {color: theme.mutedForeground}]}>
+            Don't have an account?{' '}
+          </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Welcome')}>
+            <Text style={[styles.signUpText, {color: theme.primary}]}>
+              Sign Up
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+    padding: 24,
+    justifyContent: 'center',
+  },
+  header: {
+    alignItems: 'center',
+    marginBottom: 32,
+  },
+  title: {
+    fontSize: 30,
+    fontFamily: 'Poppins-Bold',
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 16,
+    fontFamily: 'Poppins',
+    textAlign: 'center',
+  },
+  card: {
+    padding: 24,
+  },
+  forgotPassword: {
+    alignSelf: 'flex-end',
+    marginBottom: 16,
+  },
+  forgotPasswordText: {
+    fontSize: 14,
+    fontFamily: 'Poppins',
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 24,
+  },
+  footerText: {
+    fontSize: 14,
+    fontFamily: 'Poppins',
+  },
+  signUpText: {
+    fontSize: 14,
+    fontFamily: 'Poppins-Bold',
+  },
+});

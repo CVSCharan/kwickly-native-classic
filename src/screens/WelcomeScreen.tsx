@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {useTheme} from '../theme/ThemeProvider';
+import {View, Text, StyleSheet, Image} from 'react-native';
+import {useThemeStore} from '../store/useThemeStore';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {LandingStackParamList} from '../navigation/types';
 import {Button} from '../components/Button';
@@ -11,17 +11,18 @@ type WelcomeScreenProps = {
 };
 
 export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({navigation}) => {
-  const {toggleTheme, theme} = useTheme();
+  const {theme, toggleTheme} = useThemeStore();
 
   return (
     <SafeAreaView
       style={[styles.container, {backgroundColor: theme.background}]}>
       <View style={styles.content}>
-        {/* Logo placeholder - replace with your actual logo */}
-        <View style={[styles.logo, {backgroundColor: theme.primary}]}>
-          <Text style={[styles.logoText, {color: theme.primaryForeground}]}>
-            K
-          </Text>
+        <View style={styles.logoContainer}>
+          <Image
+            source={require('../../assets/logos/logo.png')}
+            style={styles.logo}
+            resizeMode="contain"
+          />
         </View>
 
         <View style={styles.titleContainer}>
@@ -63,17 +64,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 24,
   },
-  logo: {
-    height: 96,
-    width: 96,
-    borderRadius: 48,
+  logoContainer: {
+    width: 120,
+    height: 120,
+    marginBottom: 24,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 24,
   },
-  logoText: {
-    fontSize: 32,
-    fontFamily: 'Poppins-Bold',
+  logo: {
+    width: '100%',
+    height: '100%',
   },
   titleContainer: {
     alignItems: 'center',

@@ -5,24 +5,30 @@
  * @format
  */
 
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {ThemeProvider} from './src/theme/ThemeProvider';
+import {useColorScheme} from 'react-native';
 import {LandingStack} from './src/navigation/LandingStack';
 import {AuthStack} from './src/navigation/AuthStack';
+import {useThemeStore} from './src/store/useThemeStore';
 
 function App(): React.ReactElement {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const systemColorScheme = useColorScheme();
+  const setTheme = useThemeStore(state => state.setTheme);
+
+  // Handle system theme changes
+  useEffect(() => {
+    setTheme(systemColorScheme === 'dark');
+  }, [systemColorScheme, setTheme]);
 
   return (
-    <ThemeProvider>
-      <SafeAreaProvider>
-        <NavigationContainer>
-          {isAuthenticated ? <AuthStack /> : <LandingStack />}
-        </NavigationContainer>
-      </SafeAreaProvider>
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        {isAuthenticated ? <AuthStack /> : <LandingStack />}
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
 

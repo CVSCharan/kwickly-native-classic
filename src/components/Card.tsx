@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, Text, ViewStyle} from 'react-native';
+import {View, Text, ViewStyle, StyleSheet} from 'react-native';
+import {useThemeStore} from '../store/useThemeStore';
 
 type CardProps = {
   children: React.ReactNode;
   title?: string;
-  className?: string;
   style?: ViewStyle;
   variant?: 'default' | 'glass';
 };
@@ -12,18 +12,25 @@ type CardProps = {
 export const Card: React.FC<CardProps> = ({
   children,
   title,
-  className = '',
   style,
   variant = 'default',
 }) => {
-  const variantClass = variant === 'glass' ? 'glass-card' : 'professional-card';
+  const theme = useThemeStore(state => state.theme);
+
+  const cardStyle = [
+    styles.card,
+    {
+      backgroundColor:
+        variant === 'glass' ? 'rgba(255, 255, 255, 0.1)' : theme.card,
+      borderColor: theme.border,
+    },
+    style,
+  ];
 
   return (
-    <View
-      className={`p-4 ${variantClass} ${className}`}
-      style={style}>
+    <View style={cardStyle}>
       {title && (
-        <Text className="text-lg font-semibold text-card-foreground mb-2">
+        <Text style={[styles.title, {color: theme.cardForeground}]}>
           {title}
         </Text>
       )}
@@ -31,3 +38,24 @@ export const Card: React.FC<CardProps> = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  card: {
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  title: {
+    fontSize: 18,
+    fontFamily: 'Poppins-Bold',
+    marginBottom: 8,
+  },
+});

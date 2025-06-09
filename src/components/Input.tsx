@@ -1,33 +1,66 @@
 import React from 'react';
-import {View, Text, TextInput, TextInputProps} from 'react-native';
+import {View, Text, TextInput, TextInputProps, StyleSheet} from 'react-native';
+import {useThemeStore} from '../store/useThemeStore';
 
 type InputProps = TextInputProps & {
   label?: string;
   error?: string;
-  className?: string;
-  containerClassName?: string;
+  style?: any;
+  containerStyle?: any;
 };
 
 export const Input: React.FC<InputProps> = ({
   label,
   error,
-  className = '',
-  containerClassName = '',
+  style,
+  containerStyle,
   ...props
 }) => {
+  const theme = useThemeStore(state => state.theme);
+
   return (
-    <View className={`mb-4 ${containerClassName}`}>
+    <View style={[styles.container, containerStyle]}>
       {label && (
-        <Text className="text-sm font-medium text-foreground mb-1">{label}</Text>
+        <Text style={[styles.label, {color: theme.foreground}]}>{label}</Text>
       )}
       <TextInput
-        className={`p-3 rounded-lg bg-input text-foreground border ${error ? 'border-destructive' : 'border-border'} ${className}`}
-        placeholderTextColor="hsl(var(--muted-foreground))"
+        style={[
+          styles.input,
+          {
+            backgroundColor: theme.input,
+            color: theme.foreground,
+            borderColor: error ? theme.destructive : theme.border,
+          },
+          style,
+        ]}
+        placeholderTextColor={theme.mutedForeground}
         {...props}
       />
       {error && (
-        <Text className="mt-1 text-xs text-destructive">{error}</Text>
+        <Text style={[styles.error, {color: theme.destructive}]}>{error}</Text>
       )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginBottom: 16,
+  },
+  label: {
+    fontSize: 14,
+    fontFamily: 'Poppins',
+    marginBottom: 4,
+  },
+  input: {
+    padding: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+    fontFamily: 'Poppins',
+  },
+  error: {
+    marginTop: 4,
+    fontSize: 12,
+    fontFamily: 'Poppins',
+  },
+});
