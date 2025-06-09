@@ -44,24 +44,17 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         flexGrow: 1,
         paddingTop: Platform.OS === 'ios' ? 0 : insets.top,
       }}
-      style={[styles.drawer, {backgroundColor: theme.background}]}>
-      <View style={[styles.drawerHeader, {borderBottomColor: theme.border}]}>
+      style={styles.drawer}>
+      <View style={styles.drawerHeader}>
         <View style={styles.logoContainer}>
           <Image source={logo} style={styles.logo} resizeMode="contain" />
         </View>
-        <Text style={[styles.restaurantName, {color: theme.foreground}]}>
-          Kwickly Restaurant
-        </Text>
-        <Text
-          style={[styles.restaurantAddress, {color: theme.mutedForeground}]}>
-          123 Main Street, City
-        </Text>
       </View>
 
       <View style={styles.drawerSection}>
         <Text
           style={[styles.drawerSectionTitle, {color: theme.mutedForeground}]}>
-          MAIN MENU
+          OPERATIONS
         </Text>
         <DrawerItemList {...props} />
       </View>
@@ -175,13 +168,12 @@ const styles = StyleSheet.create({
   },
   drawerHeader: {
     padding: wp('6%'),
-    borderBottomWidth: 1,
-    marginBottom: hp('2%'),
   },
   logoContainer: {
     width: wp('30%'),
-    height: wp('20%'),
-    marginBottom: hp('2%'),
+    height: wp('10%'),
+    marginBottom: hp('1%'),
+    marginTop: hp('1%'),
   },
   logo: {
     width: '100%',
