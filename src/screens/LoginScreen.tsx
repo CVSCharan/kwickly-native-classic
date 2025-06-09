@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Alert,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {LandingStackParamList} from '../navigation/types';
@@ -13,15 +20,9 @@ type LoginScreenProps = {
   navigation: NativeStackNavigationProp<LandingStackParamList, 'Login'>;
 };
 
-// Test credentials (you can remove these in production)
-const TEST_CREDENTIALS = {
-  email: 'test@example.com',
-  password: 'password123',
-};
-
 export const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
   const theme = useThemeStore(state => state.theme);
-  const setAuthenticated = useAuthStore(state => state.setAuthenticated);
+  const login = useAuthStore(state => state.login);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -35,26 +36,19 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (validate()) {
-      setIsLoading(true);
-      // Simulate API call
-      setTimeout(() => {
+      try {
+        setIsLoading(true);
+        await login(email, password);
+      } catch (error) {
+        Alert.alert(
+          'Login Failed',
+          error instanceof Error ? error.message : 'Invalid credentials',
+        );
+      } finally {
         setIsLoading(false);
-
-        // Check if test credentials are used
-        if (
-          email === TEST_CREDENTIALS.email &&
-          password === TEST_CREDENTIALS.password
-        ) {
-          console.log('Login successful with test credentials');
-          setAuthenticated(true); // This will trigger the switch to AuthStack
-        } else {
-          console.log('Login attempt:', {email, password});
-          // Here you would typically show an error for invalid credentials
-          console.log('Invalid credentials');
-        }
-      }, 1500);
+      }
     }
   };
 

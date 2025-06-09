@@ -6,29 +6,30 @@
  */
 
 import React, {useEffect} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {useColorScheme} from 'react-native';
-import {LandingStack} from './src/navigation/LandingStack';
-import {AuthStack} from './src/navigation/AuthStack';
 import {useThemeStore} from './src/store/useThemeStore';
 import {useAuthStore} from './src/store/useAuthStore';
+import {RootNavigator} from './src/navigation/RootNavigator';
 
 function App(): React.ReactElement {
-  const isAuthenticated = useAuthStore(state => state.isAuthenticated);
   const systemColorScheme = useColorScheme();
   const setTheme = useThemeStore(state => state.setTheme);
+  const initialize = useAuthStore(state => state.initialize);
 
   // Handle system theme changes
   useEffect(() => {
     setTheme(systemColorScheme === 'dark');
   }, [systemColorScheme, setTheme]);
 
+  // Initialize auth state
+  useEffect(() => {
+    initialize();
+  }, [initialize]);
+
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        {isAuthenticated ? <AuthStack /> : <LandingStack />}
-      </NavigationContainer>
+      <RootNavigator />
     </SafeAreaProvider>
   );
 }
