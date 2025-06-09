@@ -3,6 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {DashboardScreen} from '../screens/DashboardScreen';
 import {SettingsScreen} from '../screens/SettingsScreen';
+import {OrdersScreen} from '../screens/OrdersScreen';
 import {useThemeStore} from '../store/useThemeStore';
 import {Platform} from 'react-native';
 
@@ -14,8 +15,10 @@ export type TabParamList = {
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
-// Placeholder for Orders screen until it's implemented
-const OrdersScreen = () => <DashboardScreen />;
+const renderTabIcon =
+  (name: string) =>
+  ({color, size}: {color: string; size: number}) =>
+    <Icon name={name} size={size} color={color} />;
 
 export const TabNavigator = () => {
   const {theme} = useThemeStore();
@@ -42,27 +45,21 @@ export const TabNavigator = () => {
         name="Dashboard"
         component={DashboardScreen}
         options={{
-          tabBarIcon: ({color, size}) => (
-            <Icon name="grid-outline" size={size} color={color} />
-          ),
+          tabBarIcon: renderTabIcon('grid-outline'),
         }}
       />
       <Tab.Screen
         name="Orders"
         component={OrdersScreen}
         options={{
-          tabBarIcon: ({color, size}) => (
-            <Icon name="receipt-outline" size={size} color={color} />
-          ),
+          tabBarIcon: renderTabIcon('receipt-outline'),
         }}
       />
       <Tab.Screen
         name="Settings"
         component={SettingsScreen}
         options={{
-          tabBarIcon: ({color, size}) => (
-            <Icon name="settings-outline" size={size} color={color} />
-          ),
+          tabBarIcon: renderTabIcon('settings-outline'),
         }}
       />
     </Tab.Navigator>
