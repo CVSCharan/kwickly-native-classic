@@ -12,6 +12,12 @@ type LoginScreenProps = {
   navigation: NativeStackNavigationProp<LandingStackParamList, 'Login'>;
 };
 
+// Test credentials (you can remove these in production)
+const TEST_CREDENTIALS = {
+  email: 'test@example.com',
+  password: 'password123',
+};
+
 export const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
   const theme = useThemeStore(state => state.theme);
   const [email, setEmail] = useState('');
@@ -33,8 +39,23 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
       // Simulate API call
       setTimeout(() => {
         setIsLoading(false);
-        console.log('Login:', {email, password});
-        // Navigate to Dashboard or show error
+
+        // Check if test credentials are used
+        if (
+          email === TEST_CREDENTIALS.email &&
+          password === TEST_CREDENTIALS.password
+        ) {
+          console.log('Login successful with test credentials');
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'Dashboard'}],
+          });
+        } else {
+          console.log('Login attempt:', {email, password});
+          // Here you would typically show an error for invalid credentials
+          // For now, we'll just log it
+          console.log('Invalid credentials');
+        }
       }, 1500);
     }
   };
@@ -120,8 +141,8 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   logoContainer: {
-    width: 170,
-    height: 170,
+    width: 160,
+    height: 100,
     alignItems: 'center',
     justifyContent: 'center',
   },
