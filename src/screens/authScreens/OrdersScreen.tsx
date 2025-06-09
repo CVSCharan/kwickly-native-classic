@@ -8,13 +8,13 @@ import {
   TextInput,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useThemeStore} from '../store/useThemeStore';
-import {Card} from '../components/Card';
+import {useThemeStore} from '../../store/useThemeStore';
+import {Card} from '../../components/Card';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {CompositeNavigationProp} from '@react-navigation/native';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {AuthStackParamList, TabParamList} from '../navigation/types';
+import {AuthStackParamList, TabParamList} from '../../navigation/types';
 
 type OrdersScreenProps = {
   navigation: CompositeNavigationProp<

@@ -1,13 +1,13 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useThemeStore, ThemeMode} from '../store/useThemeStore';
-import {useAuthStore} from '../store/useAuthStore';
-import {Card} from '../components/Card';
+import {useThemeStore, ThemeMode} from '../../store/useThemeStore';
+import {useAuthStore} from '../../store/useAuthStore';
+import {Card} from '../../components/Card';
 import {CompositeNavigationProp} from '@react-navigation/native';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {AuthStackParamList, TabParamList} from '../navigation/types';
+import {AuthStackParamList, TabParamList} from '../../navigation/types';
 
 type SettingsScreenProps = {
   navigation: CompositeNavigationProp<

@@ -9,13 +9,13 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {LandingStackParamList} from '../navigation/types';
-import {Input} from '../components/Input';
-import {Button} from '../components/Button';
-import {Card} from '../components/Card';
-import {useThemeStore} from '../store/useThemeStore';
-import {useAuthStore} from '../store/useAuthStore';
-import {useThemeAssets} from '../hooks/useThemeAssets';
+import {LandingStackParamList} from '../../navigation/types';
+import {Input} from '../../components/Input';
+import {Button} from '../../components/Button';
+import {Card} from '../../components/Card';
+import {useThemeStore} from '../../store/useThemeStore';
+import {useAuthStore} from '../../store/useAuthStore';
+import {useThemeAssets} from '../../hooks/useThemeAssets';
 
 type LoginScreenProps = {
   navigation: NativeStackNavigationProp<LandingStackParamList, 'Login'>;

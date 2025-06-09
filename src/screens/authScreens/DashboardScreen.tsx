@@ -1,13 +1,13 @@
 import React from 'react';
 import {View, Text, ScrollView, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useThemeStore} from '../store/useThemeStore';
-import {Button} from '../components/Button';
-import {Card} from '../components/Card';
+import {useThemeStore} from '../../store/useThemeStore';
+import {Button} from '../../components/Button';
+import {Card} from '../../components/Card';
 import {CompositeNavigationProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
-import {AuthStackParamList, TabParamList} from '../navigation/types';
+import {AuthStackParamList, TabParamList} from '../../navigation/types';
 
 type DashboardScreenProps = {
   navigation: CompositeNavigationProp<

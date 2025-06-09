@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
-import {useThemeStore} from '../store/useThemeStore';
+import {useThemeStore} from '../../store/useThemeStore';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {LandingStackParamList} from '../navigation/types';
+import {LandingStackParamList} from '../../navigation/types';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useThemeAssets} from '../hooks/useThemeAssets';
+import {useThemeAssets} from '../../hooks/useThemeAssets';
 
 type WelcomeScreenProps = {
   navigation: NativeStackNavigationProp<LandingStackParamList, 'Welcome'>;

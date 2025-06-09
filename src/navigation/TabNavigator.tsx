@@ -1,9 +1,9 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {DashboardScreen} from '../screens/DashboardScreen';
-import {SettingsScreen} from '../screens/SettingsScreen';
-import {OrdersScreen} from '../screens/OrdersScreen';
+import {DashboardScreen} from '../screens/authScreens/DashboardScreen';
+import {SettingsScreen} from '../screens/authScreens/SettingsScreen';
+import {OrdersScreen} from '../screens/authScreens/OrdersScreen';
 import {useThemeStore} from '../store/useThemeStore';
 import {Platform} from 'react-native';
 
