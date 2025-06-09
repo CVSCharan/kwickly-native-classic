@@ -15,6 +15,7 @@ import {CompositeNavigationProp} from '@react-navigation/native';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AuthStackParamList, TabParamList} from '../../navigation/types';
+import {formatIndianPrice} from '../../utils/currency';
 
 type OrdersScreenProps = {
   navigation: CompositeNavigationProp<
@@ -40,7 +41,7 @@ const MOCK_ORDERS: Order[] = [
     table: 1,
     items: 3,
     status: 'Preparing',
-    total: 45.97,
+    total: 1499,
     time: '10:30 AM',
   },
   {
@@ -48,7 +49,7 @@ const MOCK_ORDERS: Order[] = [
     table: 2,
     items: 2,
     status: 'Ready',
-    total: 27.98,
+    total: 899,
     time: '10:45 AM',
   },
   {
@@ -56,7 +57,7 @@ const MOCK_ORDERS: Order[] = [
     table: 3,
     items: 4,
     status: 'Delivered',
-    total: 89.96,
+    total: 2499,
     time: '11:00 AM',
   },
   {
@@ -64,7 +65,7 @@ const MOCK_ORDERS: Order[] = [
     table: 4,
     items: 1,
     status: 'Cancelled',
-    total: 12.99,
+    total: 299,
     time: '11:15 AM',
   },
 ];
@@ -187,7 +188,7 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
             </Text>
           </View>
           <Text style={[styles.detailValue, {color: theme.primary}]}>
-            ${order.total.toFixed(2)}
+            {formatIndianPrice(order.total)}
           </Text>
         </View>
       </View>

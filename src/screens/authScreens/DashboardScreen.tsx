@@ -2,7 +2,6 @@ import React from 'react';
 import {View, Text, ScrollView, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useThemeStore} from '../../store/useThemeStore';
-import {Button} from '../../components/Button';
 import {Card} from '../../components/Card';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {CompositeNavigationProp} from '@react-navigation/native';
@@ -119,6 +118,10 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
     }
   };
 
+  const formatIndianPrice = (price: number) => {
+    return '₹' + price.toLocaleString();
+  };
+
   return (
     <SafeAreaView
       style={[styles.container, {backgroundColor: theme.background}]}>
@@ -127,7 +130,11 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
           <Card title="Quick Stats" variant="glass">
             <View style={styles.statsContainer}>
               {renderStatItem(150, 'Orders Today', 'cart-outline')}
-              {renderStatItem('$2,450', 'Revenue', 'cash-outline')}
+              {renderStatItem(
+                formatIndianPrice(245000),
+                'Revenue',
+                'cash-outline',
+              )}
               {renderStatItem(45, 'Active Tables', 'grid-outline')}
             </View>
           </Card>
@@ -192,9 +199,9 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
             actionLabel="Menu"
             onActionPress={() => {}}>
             {[
-              {name: 'Chicken Burger', price: 12.99},
-              {name: 'Caesar Salad', price: 9.99},
-              {name: 'Margherita Pizza', price: 14.99},
+              {name: 'Chicken Burger', price: 299},
+              {name: 'Caesar Salad', price: 249},
+              {name: 'Margherita Pizza', price: 399},
             ].map((item, index, array) => (
               <View key={item.name}>
                 {renderMenuItem(item, index === array.length - 1)}
