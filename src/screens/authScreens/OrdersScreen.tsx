@@ -69,7 +69,7 @@ const MOCK_ORDERS: Order[] = [
   },
 ];
 
-export const OrdersScreen: React.FC<OrdersScreenProps> = ({navigation}) => {
+export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
   const {theme} = useThemeStore();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedStatus, setSelectedStatus] = useState<OrderStatus | 'All'>(
@@ -120,12 +120,16 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = ({navigation}) => {
     <Card key={order.id} style={styles.orderCard}>
       <View style={styles.orderHeader}>
         <View style={styles.orderHeaderLeft}>
-          <View 
+          <View
             style={[
-              styles.orderIconContainer, 
-              {backgroundColor: getStatusColor(order.status) + '15'}
+              styles.orderIconContainer,
+              {backgroundColor: getStatusColor(order.status) + '15'},
             ]}>
-            <Icon name={getStatusIcon(order.status)} size={20} color={getStatusColor(order.status)} />
+            <Icon
+              name={getStatusIcon(order.status)}
+              size={20}
+              color={getStatusColor(order.status)}
+            />
           </View>
           <View>
             <Text style={[styles.orderId, {color: theme.foreground}]}>
@@ -141,7 +145,8 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = ({navigation}) => {
             styles.statusBadge,
             {backgroundColor: getStatusColor(order.status) + '15'},
           ]}>
-          <Text style={[styles.statusText, {color: getStatusColor(order.status)}]}>
+          <Text
+            style={[styles.statusText, {color: getStatusColor(order.status)}]}>
             {order.status}
           </Text>
         </View>
@@ -150,7 +155,11 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = ({navigation}) => {
       <View style={[styles.orderDetails, {borderTopColor: theme.border}]}>
         <View style={styles.detailRow}>
           <View style={styles.detailLabelContainer}>
-            <Icon name="restaurant-outline" size={16} color={theme.mutedForeground} />
+            <Icon
+              name="restaurant-outline"
+              size={16}
+              color={theme.mutedForeground}
+            />
             <Text style={[styles.detailLabel, {color: theme.mutedForeground}]}>
               Table
             </Text>
@@ -182,22 +191,27 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = ({navigation}) => {
           </Text>
         </View>
       </View>
-      
+
       <View style={[styles.orderActions, {borderTopColor: theme.border}]}>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={[styles.actionButton, {borderColor: theme.border}]}
-          onPress={() => {}}
-        >
+          onPress={() => {}}>
           <Icon name="eye-outline" size={18} color={theme.foreground} />
-          <Text style={[styles.actionText, {color: theme.foreground}]}>View Details</Text>
+          <Text style={[styles.actionText, {color: theme.foreground}]}>
+            View Details
+          </Text>
         </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={[styles.actionButton, {borderColor: theme.border, backgroundColor: theme.primary + '10'}]}
-          onPress={() => {}}
-        >
+
+        <TouchableOpacity
+          style={[
+            styles.actionButton,
+            {borderColor: theme.border, backgroundColor: theme.primary + '10'},
+          ]}
+          onPress={() => {}}>
           <Icon name="print-outline" size={18} color={theme.primary} />
-          <Text style={[styles.actionText, {color: theme.primary}]}>Print Receipt</Text>
+          <Text style={[styles.actionText, {color: theme.primary}]}>
+            Print Receipt
+          </Text>
         </TouchableOpacity>
       </View>
     </Card>
@@ -209,7 +223,7 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = ({navigation}) => {
       if (status === 'All') return 'apps-outline';
       return getStatusIcon(status as OrderStatus);
     };
-    
+
     return (
       <TouchableOpacity
         key={status}
@@ -221,10 +235,10 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = ({navigation}) => {
           },
         ]}
         onPress={() => setSelectedStatus(status)}>
-        <Icon 
-          name={getFilterIcon()} 
-          size={16} 
-          color={isSelected ? theme.primaryForeground : theme.mutedForeground} 
+        <Icon
+          name={getFilterIcon()}
+          size={16}
+          color={isSelected ? theme.primaryForeground : theme.mutedForeground}
         />
         <Text
           style={[
@@ -242,13 +256,6 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = ({navigation}) => {
   return (
     <SafeAreaView
       style={[styles.container, {backgroundColor: theme.background}]}>
-      <View style={[styles.header, {borderBottomColor: theme.border}]}>
-        <Text style={[styles.title, {color: theme.foreground}]}>Orders</Text>
-        <Text style={[styles.subtitle, {color: theme.mutedForeground}]}>
-          Manage your restaurant orders
-        </Text>
-      </View>
-
       <View style={[styles.searchContainer, {backgroundColor: theme.card}]}>
         <Icon name="search-outline" size={20} color={theme.mutedForeground} />
         <TextInput
@@ -260,7 +267,11 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = ({navigation}) => {
         />
         {searchQuery !== '' && (
           <TouchableOpacity onPress={() => setSearchQuery('')}>
-            <Icon name="close-circle-outline" size={20} color={theme.mutedForeground} />
+            <Icon
+              name="close-circle-outline"
+              size={20}
+              color={theme.mutedForeground}
+            />
           </TouchableOpacity>
         )}
       </View>
@@ -275,8 +286,14 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = ({navigation}) => {
 
       {filteredOrders.length === 0 ? (
         <View style={styles.emptyContainer}>
-          <Icon name="receipt-outline" size={60} color={theme.mutedForeground} />
-          <Text style={[styles.emptyText, {color: theme.foreground}]}>No orders found</Text>
+          <Icon
+            name="receipt-outline"
+            size={60}
+            color={theme.mutedForeground}
+          />
+          <Text style={[styles.emptyText, {color: theme.foreground}]}>
+            No orders found
+          </Text>
           <Text style={[styles.emptySubtext, {color: theme.mutedForeground}]}>
             Try changing your search or filter
           </Text>
@@ -294,27 +311,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  header: {
-    padding: 24,
-    paddingBottom: 16,
-    borderBottomWidth: 1,
-  },
-  title: {
-    fontSize: 28,
-    fontFamily: 'Poppins-Bold',
-    letterSpacing: 0.5,
-  },
-  subtitle: {
-    fontSize: 14,
-    fontFamily: 'Poppins',
-    marginTop: 4,
-  },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     margin: 24,
-    marginTop: 16,
-    marginBottom: 16,
     padding: 14,
     borderRadius: 12,
     shadowColor: '#000',

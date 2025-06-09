@@ -22,9 +22,17 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
 }) => {
   const {theme} = useThemeStore();
 
-  const renderStatItem = (value: string | number, label: string, icon: string) => (
+  const renderStatItem = (
+    value: string | number,
+    label: string,
+    icon: string,
+  ) => (
     <View style={styles.statItem}>
-      <View style={[styles.statIconContainer, {backgroundColor: theme.primary + '15'}]}>
+      <View
+        style={[
+          styles.statIconContainer,
+          {backgroundColor: theme.primary + '15'},
+        ]}>
         <Icon name={icon} size={22} color={theme.primary} />
       </View>
       <Text style={[styles.statValue, {color: theme.primary}]}>{value}</Text>
@@ -42,7 +50,11 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   }) => (
     <View style={[styles.orderItem, {borderBottomColor: theme.border}]}>
       <View style={styles.orderItemLeft}>
-        <View style={[styles.orderIconContainer, {backgroundColor: theme.secondary + '15'}]}>
+        <View
+          style={[
+            styles.orderIconContainer,
+            {backgroundColor: theme.secondary + '15'},
+          ]}>
           <Icon name="receipt-outline" size={18} color={theme.secondary} />
         </View>
         <View>
@@ -54,12 +66,13 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
           </Text>
         </View>
       </View>
-      <View 
+      <View
         style={[
-          styles.statusBadge, 
-          {backgroundColor: getStatusColor(order.status) + '20'}
+          styles.statusBadge,
+          {backgroundColor: getStatusColor(order.status) + '20'},
         ]}>
-        <Text style={[styles.statusText, {color: getStatusColor(order.status)}]}>
+        <Text
+          style={[styles.statusText, {color: getStatusColor(order.status)}]}>
           {order.status}
         </Text>
       </View>
@@ -76,7 +89,11 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
         !isLast && {borderBottomWidth: 1, borderBottomColor: theme.border},
       ]}>
       <View style={styles.menuItemLeft}>
-        <View style={[styles.menuIconContainer, {backgroundColor: theme.accent + '15'}]}>
+        <View
+          style={[
+            styles.menuIconContainer,
+            {backgroundColor: theme.accent + '15'},
+          ]}>
           <Icon name="restaurant-outline" size={16} color={theme.accent} />
         </View>
         <Text style={[styles.menuItemName, {color: theme.cardForeground}]}>
@@ -88,7 +105,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
       </Text>
     </View>
   );
-  
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'Preparing':
@@ -107,22 +124,6 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
       style={[styles.container, {backgroundColor: theme.background}]}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.content}>
-          <View style={styles.header}>
-            <View>
-              <Text style={[styles.welcomeText, {color: theme.mutedForeground}]}>Welcome back</Text>
-              <Text style={[styles.headerTitle, {color: theme.foreground}]}>
-                Dashboard
-              </Text>
-            </View>
-            <Button
-              label="Settings"
-              onPress={() => navigation.navigate('Settings')}
-              variant="secondary"
-              size="sm"
-              icon="settings-outline"
-            />
-          </View>
-
           <Card title="Quick Stats" variant="glass">
             <View style={styles.statsContainer}>
               {renderStatItem(150, 'Orders Today', 'cart-outline')}
@@ -146,7 +147,11 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
             </Card>
             <Card style={styles.gridCard} variant="glass">
               <View style={styles.gridCardHeader}>
-                <Icon name="restaurant-outline" size={20} color={theme.secondary} />
+                <Icon
+                  name="restaurant-outline"
+                  size={20}
+                  color={theme.secondary}
+                />
                 <Text style={[styles.gridTitle, {color: theme.cardForeground}]}>
                   Available Tables
                 </Text>
@@ -160,11 +165,10 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
             </Card>
           </View>
 
-          <Card 
-            title="Recent Orders" 
+          <Card
+            title="Recent Orders"
             actionLabel="View All"
-            onActionPress={() => navigation.navigate('Orders')}
-          >
+            onActionPress={() => navigation.navigate('Orders')}>
             {[
               {id: 1001, table: 1, items: 2, status: 'Preparing'},
               {id: 1002, table: 2, items: 2, status: 'Ready'},
@@ -183,11 +187,10 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
             ))}
           </Card>
 
-          <Card 
+          <Card
             title="Popular Items"
             actionLabel="Menu"
-            onActionPress={() => {}}
-          >
+            onActionPress={() => {}}>
             {[
               {name: 'Chicken Burger', price: 12.99},
               {name: 'Caesar Salad', price: 9.99},
@@ -214,21 +217,6 @@ const styles = StyleSheet.create({
   content: {
     padding: 24,
     gap: 24,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  welcomeText: {
-    fontSize: 14,
-    fontFamily: 'Poppins',
-    marginBottom: 4,
-  },
-  headerTitle: {
-    fontSize: 24,
-    fontFamily: 'Poppins-Bold',
   },
   statsContainer: {
     flexDirection: 'row',
