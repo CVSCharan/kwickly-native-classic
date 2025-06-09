@@ -39,6 +39,35 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   const logout = useAuthStore(state => state.logout);
   const insets = useSafeAreaInsets();
 
+  const renderDrawerItem = (
+    label: string,
+    icon: string,
+    onPress: () => void,
+    isActive: boolean = false,
+  ) => (
+    <TouchableOpacity
+      style={[
+        styles.drawerItem,
+        isActive && {backgroundColor: theme.primary + '15'},
+      ]}
+      onPress={onPress}>
+      <Icon
+        name={icon}
+        size={wp('5%')}
+        color={isActive ? theme.primary : theme.foreground}
+      />
+      <Text
+        style={[
+          styles.drawerItemText,
+          {color: isActive ? theme.primary : theme.foreground},
+        ]}>
+        {label}
+      </Text>
+    </TouchableOpacity>
+  );
+
+  const currentRoute = props.state.routes[props.state.index].name;
+
   return (
     <DrawerContentScrollView
       {...props}
@@ -67,30 +96,18 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
             style={[styles.drawerSectionTitle, {color: theme.mutedForeground}]}>
             ACCOUNT
           </Text>
-          <TouchableOpacity
-            style={styles.drawerItem}
-            onPress={() => props.navigation.navigate('Profile')}>
-            <Icon
-              name="person-outline"
-              size={wp('5%')}
-              color={theme.foreground}
-            />
-            <Text style={[styles.drawerItemText, {color: theme.foreground}]}>
-              Profile
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.drawerItem}
-            onPress={() => props.navigation.navigate('Notifications')}>
-            <Icon
-              name="notifications-outline"
-              size={wp('5%')}
-              color={theme.foreground}
-            />
-            <Text style={[styles.drawerItemText, {color: theme.foreground}]}>
-              Notifications
-            </Text>
-          </TouchableOpacity>
+          {renderDrawerItem(
+            'Profile',
+            'person-outline',
+            () => props.navigation.navigate('Profile'),
+            currentRoute === 'Profile',
+          )}
+          {renderDrawerItem(
+            'Notifications',
+            'notifications-outline',
+            () => props.navigation.navigate('Notifications'),
+            currentRoute === 'Notifications',
+          )}
         </View>
       </View>
 

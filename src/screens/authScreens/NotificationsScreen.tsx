@@ -311,15 +311,14 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
     opacity: 0.8,
   },
-  settingsCard: {
-    padding: wp('6%'),
-    gap: hp('2%'),
-  },
   sectionTitle: {
     fontSize: wp('4.5%'),
     fontFamily: 'Poppins-SemiBold',
     letterSpacing: 0.3,
-    marginBottom: hp('1%'),
+    marginBottom: hp('2%'),
+  },
+  settingsCard: {
+    padding: wp('6%'),
   },
   settingsContent: {
     gap: hp('2%'),
@@ -347,18 +346,17 @@ const styles = StyleSheet.create({
   settingTitle: {
     fontSize: wp('3.8%'),
     fontFamily: 'Poppins-SemiBold',
-    letterSpacing: 0.2,
-    marginBottom: hp('0.2%'),
+    letterSpacing: 0.3,
+    marginBottom: hp('0.5%'),
   },
   settingDescription: {
-    fontSize: wp('3.2%'),
+    fontSize: wp('3.5%'),
     fontFamily: 'Poppins-Regular',
     letterSpacing: 0.2,
     opacity: 0.8,
   },
   notificationsCard: {
     padding: wp('6%'),
-    gap: hp('2%'),
   },
   notificationsContent: {
     gap: hp('2%'),
@@ -369,6 +367,9 @@ const styles = StyleSheet.create({
     paddingBottom: hp('2%'),
     borderBottomWidth: 1.5,
     gap: wp('4%'),
+    paddingHorizontal: wp('2%'),
+    paddingVertical: hp('1.5%'),
+    borderRadius: wp('2%'),
   },
   notificationIconContainer: {
     width: wp('10%'),

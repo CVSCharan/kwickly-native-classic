@@ -102,11 +102,13 @@ export const ProfileScreen = () => {
         style={[styles.actionButton, {borderBottomColor: theme.border}]}
         onPress={() => {}}>
         <View style={styles.actionLeft}>
-          <Icon
-            name="create-outline"
-            size={wp('5%')}
-            color={theme.foreground}
-          />
+          <View
+            style={[
+              styles.actionIconContainer,
+              {backgroundColor: theme.primary + '15'},
+            ]}>
+            <Icon name="create-outline" size={wp('5%')} color={theme.primary} />
+          </View>
           <Text style={[styles.actionText, {color: theme.foreground}]}>
             Edit Profile
           </Text>
@@ -122,7 +124,13 @@ export const ProfileScreen = () => {
         style={[styles.actionButton, {borderBottomColor: theme.border}]}
         onPress={() => {}}>
         <View style={styles.actionLeft}>
-          <Icon name="key-outline" size={wp('5%')} color={theme.foreground} />
+          <View
+            style={[
+              styles.actionIconContainer,
+              {backgroundColor: theme.primary + '15'},
+            ]}>
+            <Icon name="key-outline" size={wp('5%')} color={theme.primary} />
+          </View>
           <Text style={[styles.actionText, {color: theme.foreground}]}>
             Change Password
           </Text>
@@ -138,11 +146,13 @@ export const ProfileScreen = () => {
         style={[styles.actionButton, {borderBottomColor: theme.border}]}
         onPress={() => {}}>
         <View style={styles.actionLeft}>
-          <Icon
-            name="shield-outline"
-            size={wp('5%')}
-            color={theme.foreground}
-          />
+          <View
+            style={[
+              styles.actionIconContainer,
+              {backgroundColor: theme.primary + '15'},
+            ]}>
+            <Icon name="shield-outline" size={wp('5%')} color={theme.primary} />
+          </View>
           <Text style={[styles.actionText, {color: theme.foreground}]}>
             Privacy Settings
           </Text>
@@ -156,11 +166,17 @@ export const ProfileScreen = () => {
 
       <TouchableOpacity style={styles.actionButton} onPress={() => {}}>
         <View style={styles.actionLeft}>
-          <Icon
-            name="help-circle-outline"
-            size={wp('5%')}
-            color={theme.foreground}
-          />
+          <View
+            style={[
+              styles.actionIconContainer,
+              {backgroundColor: theme.primary + '15'},
+            ]}>
+            <Icon
+              name="help-circle-outline"
+              size={wp('5%')}
+              color={theme.primary}
+            />
+          </View>
           <Text style={[styles.actionText, {color: theme.foreground}]}>
             Help & Support
           </Text>
@@ -313,12 +329,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: wp('4%'),
+    paddingVertical: hp('2%'),
     borderBottomWidth: 1.5,
   },
   actionLeft: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: wp('4%'),
+  },
+  actionIconContainer: {
+    width: wp('10%'),
+    height: wp('10%'),
+    borderRadius: wp('5%'),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   actionText: {
     fontSize: wp('3.8%'),
