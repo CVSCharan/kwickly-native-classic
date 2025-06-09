@@ -19,14 +19,13 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({navigation}) => {
       <View style={styles.content}>
         <View style={styles.logoContainer}>
           <Image
-            source={require('../../assets/logos/logo.png')}
+            source={require('../../assets/logos/kwickly-light-bold-logo.png')}
             style={styles.logo}
             resizeMode="contain"
           />
         </View>
 
         <View style={styles.titleContainer}>
-          <Text style={[styles.title, {color: theme.foreground}]}>Kwickly</Text>
           <Text style={[styles.subtitle, {color: theme.mutedForeground}]}>
             Restaurant POS Admin
           </Text>

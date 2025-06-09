@@ -6,7 +6,7 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
-import {useTheme} from '../theme/ThemeProvider';
+import {useThemeStore} from '../store/useThemeStore';
 
 type ButtonProps = {
   onPress: () => void;
@@ -31,7 +31,7 @@ export const Button: React.FC<ButtonProps> = ({
   fullWidth = false,
   style,
 }) => {
-  const {theme} = useTheme();
+  const {theme} = useThemeStore();
 
   const getBackgroundColor = () => {
     switch (variant) {

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {LandingStackParamList} from '../navigation/types';
@@ -44,9 +44,13 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
       style={[styles.container, {backgroundColor: theme.background}]}>
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text style={[styles.title, {color: theme.foreground}]}>
-            Welcome Back
-          </Text>
+          <View style={styles.logoContainer}>
+            <Image
+              source={require('../../assets/logos/kwickly-light-bold-logo.png')}
+              style={styles.logo}
+              resizeMode="contain"
+            />
+          </View>
           <Text style={[styles.subtitle, {color: theme.mutedForeground}]}>
             Sign in to your account to continue
           </Text>
@@ -114,6 +118,16 @@ const styles = StyleSheet.create({
   header: {
     alignItems: 'center',
     marginBottom: 32,
+  },
+  logoContainer: {
+    width: 170,
+    height: 170,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logo: {
+    width: '100%',
+    height: '100%',
   },
   title: {
     fontSize: 30,
