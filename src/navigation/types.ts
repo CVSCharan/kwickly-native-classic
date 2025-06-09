@@ -1,6 +1,7 @@
 export type LandingStackParamList = {
   Welcome: undefined;
   Login: undefined;
+  ForgotPassword: undefined;
 };
 
 export type AuthStackParamList = {
