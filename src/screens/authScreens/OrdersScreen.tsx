@@ -5,7 +5,6 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  TextInput,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useThemeStore} from '../../store/useThemeStore';
@@ -72,19 +71,12 @@ const MOCK_ORDERS: Order[] = [
 
 export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
   const {theme} = useThemeStore();
-  const [searchQuery, setSearchQuery] = useState('');
   const [selectedStatus, setSelectedStatus] = useState<OrderStatus | 'All'>(
     'All',
   );
 
   const filteredOrders = MOCK_ORDERS.filter(order => {
-    const matchesSearch =
-      searchQuery === '' ||
-      order.id.toString().includes(searchQuery) ||
-      order.table.toString().includes(searchQuery);
-    const matchesStatus =
-      selectedStatus === 'All' || order.status === selectedStatus;
-    return matchesSearch && matchesStatus;
+    return selectedStatus === 'All' || order.status === selectedStatus;
   });
 
   const getStatusColor = (status: OrderStatus) => {
@@ -221,27 +213,32 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
       return getStatusIcon(status as OrderStatus);
     };
 
+    const getFilterColor = () => {
+      if (status === 'All') return theme.primary;
+      return getStatusColor(status as OrderStatus);
+    };
+
     return (
       <TouchableOpacity
         key={status}
         style={[
           styles.filterChip,
           {
-            backgroundColor: isSelected ? theme.primary : theme.card,
-            borderColor: isSelected ? theme.primary : theme.border,
+            backgroundColor: isSelected ? getFilterColor() : 'transparent',
+            borderColor: isSelected ? getFilterColor() : theme.border,
           },
         ]}
         onPress={() => setSelectedStatus(status)}>
         <Icon
           name={getFilterIcon()}
-          size={16}
-          color={isSelected ? theme.primaryForeground : theme.mutedForeground}
+          size={18}
+          color={isSelected ? theme.primaryForeground : getFilterColor()}
         />
         <Text
           style={[
             styles.filterChipText,
             {
-              color: isSelected ? theme.primaryForeground : theme.foreground,
+              color: isSelected ? theme.primaryForeground : getFilterColor(),
             },
           ]}>
           {status}
@@ -253,29 +250,20 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
   return (
     <SafeAreaView
       style={[styles.container, {backgroundColor: theme.background}]}>
-      <View style={[styles.searchContainer, {backgroundColor: theme.card}]}>
-        <Icon name="search" size={20} color={theme.mutedForeground} />
-        <TextInput
-          style={[styles.searchInput, {color: theme.foreground}]}
-          placeholder="Search orders..."
-          placeholderTextColor={theme.mutedForeground}
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-        />
-        {searchQuery !== '' && (
-          <TouchableOpacity onPress={() => setSearchQuery('')}>
-            <Icon name="close-circle" size={20} color={theme.mutedForeground} />
-          </TouchableOpacity>
-        )}
+      <View style={styles.header}>
+        <Text style={[styles.headerTitle, {color: theme.foreground}]}>
+          Orders
+        </Text>
+        <Text style={[styles.headerSubtitle, {color: theme.mutedForeground}]}>
+          Manage and track your orders
+        </Text>
       </View>
 
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <View style={styles.filterContainer}>
-          {(
-            ['All', 'Preparing', 'Ready', 'Delivered', 'Cancelled'] as const
-          ).map(status => renderStatusFilter(status))}
-        </View>
-      </ScrollView>
+      <View style={styles.filterContainer}>
+        {(['All', 'Preparing', 'Ready', 'Delivered', 'Cancelled'] as const).map(
+          status => renderStatusFilter(status),
+        )}
+      </View>
 
       {filteredOrders.length === 0 ? (
         <View style={styles.emptyContainer}>
@@ -288,7 +276,7 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
             No orders found
           </Text>
           <Text style={[styles.emptySubtext, {color: theme.mutedForeground}]}>
-            Try changing your search or filter
+            Try changing your filter
           </Text>
         </View>
       ) : (
@@ -304,59 +292,43 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    margin: 24,
-    padding: 18,
-    borderRadius: 20,
-    borderWidth: 1, // Added border to replace shadow
-    // Shadow removed
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.12,
-    shadowRadius: 4,
-    elevation: 4,
+  header: {
+    padding: 24,
+    paddingBottom: 12,
   },
-  searchInput: {
-    flex: 1,
-    marginLeft: 14,
-    marginRight: 14,
+  headerTitle: {
+    fontSize: 28,
+    fontFamily: 'Poppins-Bold',
+    letterSpacing: 0.5,
+    marginBottom: 4,
+  },
+  headerSubtitle: {
     fontSize: 15,
     fontFamily: 'Poppins-Medium',
-    letterSpacing: 0.4,
+    letterSpacing: 0.3,
+    opacity: 0.8,
   },
   filterContainer: {
     flexDirection: 'row',
-    paddingHorizontal: 24,
-    paddingBottom: 20,
-    gap: 14,
+    flexWrap: 'wrap',
+    paddingHorizontal: 20,
+    paddingBottom: 16,
+    gap: 12,
+    alignItems: 'center',
   },
   filterChip: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 18,
-    paddingVertical: 12,
-    borderRadius: 25,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: 10,
     borderWidth: 1.5,
-    gap: 10,
-    // Shadow removed
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.08,
-    shadowRadius: 3,
-    elevation: 3,
+    gap: 8,
   },
   filterChipText: {
-    fontSize: 13,
+    fontSize: 14,
     fontFamily: 'Poppins-SemiBold',
-    letterSpacing: 0.6,
+    letterSpacing: 0.3,
   },
   ordersList: {
     flex: 1,
