@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, Text, ScrollView, StyleSheet, Platform} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {View, Text, ScrollView, StyleSheet} from 'react-native';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useThemeStore} from '../../store/useThemeStore';
 import {Card} from '../../components/Card';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -9,6 +9,10 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {AuthStackParamList, TabParamList} from '../../navigation/types';
 import {MenuButton} from '../../components/MenuButton';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 type DashboardScreenProps = {
   navigation: CompositeNavigationProp<
@@ -21,6 +25,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   navigation,
 }) => {
   const {theme} = useThemeStore();
+  const insets = useSafeAreaInsets();
 
   const renderStatItem = (
     value: string | number,
@@ -125,9 +130,18 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
 
   return (
     <SafeAreaView
+      edges={['left', 'right']}
       style={[styles.container, {backgroundColor: theme.background}]}>
       <MenuButton />
-      <ScrollView style={styles.scrollView}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={[
+          styles.scrollViewContent,
+          {
+            paddingTop: insets.top + hp('2%'),
+            paddingBottom: insets.bottom + hp('2%'),
+          },
+        ]}>
         <View style={styles.content}>
           <View style={styles.header}>
             <Text style={[styles.headerTitle, {color: theme.foreground}]}>
@@ -232,24 +246,26 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
+  scrollViewContent: {
+    flexGrow: 1,
+  },
   content: {
-    padding: 20,
-    gap: 20,
+    padding: wp('5%'),
+    gap: hp('2.5%'),
   },
   header: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: Platform.OS === 'ios' ? 100 : 60,
-    paddingBottom: 12,
+    paddingVertical: hp('2%'),
   },
   headerTitle: {
-    fontSize: 28,
+    fontSize: wp('7%'),
     fontFamily: 'Poppins-Bold',
     letterSpacing: 0.5,
-    marginBottom: 4,
+    marginBottom: hp('0.5%'),
   },
   headerSubtitle: {
-    fontSize: 15,
+    fontSize: wp('4%'),
     fontFamily: 'Poppins-Medium',
     letterSpacing: 0.3,
     opacity: 0.8,
@@ -257,30 +273,29 @@ const styles = StyleSheet.create({
   statsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 12,
+    paddingVertical: hp('1.5%'),
   },
   statItem: {
     alignItems: 'center',
-    paddingHorizontal: 16,
+    paddingHorizontal: wp('4%'),
     flex: 1,
   },
   statIconContainer: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
+    width: wp('13%'),
+    height: wp('13%'),
+    borderRadius: wp('6.5%'),
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 14,
-    // Shadow removed
+    marginBottom: hp('1.5%'),
   },
   statValue: {
-    fontSize: 24,
+    fontSize: wp('6%'),
     fontFamily: 'Poppins-Bold',
-    marginBottom: 6,
+    marginBottom: hp('0.5%'),
     letterSpacing: 0.5,
   },
   statLabel: {
-    fontSize: 13,
+    fontSize: wp('3.5%'),
     fontFamily: 'Poppins-Medium',
     textAlign: 'center',
     letterSpacing: 0.3,

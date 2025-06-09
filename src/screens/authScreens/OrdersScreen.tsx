@@ -5,9 +5,8 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  Platform,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useThemeStore} from '../../store/useThemeStore';
 import {Card} from '../../components/Card';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -17,6 +16,10 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AuthStackParamList, TabParamList} from '../../navigation/types';
 import {formatIndianPrice} from '../../utils/currency';
 import {MenuButton} from '../../components/MenuButton';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 type OrdersScreenProps = {
   navigation: CompositeNavigationProp<
@@ -73,6 +76,7 @@ const MOCK_ORDERS: Order[] = [
 
 export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
   const {theme} = useThemeStore();
+  const insets = useSafeAreaInsets();
   const [selectedStatus, setSelectedStatus] = useState<OrderStatus | 'All'>(
     'All',
   );
@@ -251,9 +255,18 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
 
   return (
     <SafeAreaView
+      edges={['left', 'right']}
       style={[styles.container, {backgroundColor: theme.background}]}>
       <MenuButton />
-      <View style={styles.scrollView}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={[
+          styles.scrollViewContent,
+          {
+            paddingTop: insets.top + hp('2%'),
+            paddingBottom: insets.bottom + hp('2%'),
+          },
+        ]}>
         <View style={styles.content}>
           <View style={styles.header}>
             <Text style={[styles.headerTitle, {color: theme.foreground}]}>
@@ -261,7 +274,7 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
             </Text>
             <Text
               style={[styles.headerSubtitle, {color: theme.mutedForeground}]}>
-              Manage and track your orders
+              Manage your orders
             </Text>
           </View>
 
@@ -292,7 +305,7 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
             </ScrollView>
           )}
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -304,24 +317,26 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
+  scrollViewContent: {
+    flexGrow: 1,
+  },
   content: {
-    padding: 20,
-    gap: 20,
+    padding: wp('5%'),
+    gap: hp('2.5%'),
   },
   header: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: Platform.OS === 'ios' ? 100 : 60,
-    paddingBottom: 12,
+    paddingVertical: hp('2%'),
   },
   headerTitle: {
-    fontSize: 28,
+    fontSize: wp('7%'),
     fontFamily: 'Poppins-Bold',
     letterSpacing: 0.5,
-    marginBottom: 4,
+    marginBottom: hp('0.5%'),
   },
   headerSubtitle: {
-    fontSize: 15,
+    fontSize: wp('4%'),
     fontFamily: 'Poppins-Medium',
     letterSpacing: 0.3,
     opacity: 0.8,

@@ -6,9 +6,8 @@ import {
   TouchableOpacity,
   Switch,
   ScrollView,
-  Platform,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useThemeStore, ThemeMode} from '../../store/useThemeStore';
 import {useAuthStore} from '../../store/useAuthStore';
 import {Card} from '../../components/Card';
@@ -18,6 +17,10 @@ import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AuthStackParamList, TabParamList} from '../../navigation/types';
 import {MenuButton} from '../../components/MenuButton';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 type SettingsScreenProps = {
   navigation: CompositeNavigationProp<
@@ -64,6 +67,7 @@ const SettingsSection: React.FC<SettingsSectionProps> = ({
 
 export const SettingsScreen: React.FC<SettingsScreenProps> = () => {
   const {theme, mode, setMode} = useThemeStore();
+  const insets = useSafeAreaInsets();
   const logout = useAuthStore(state => state.logout);
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
   const [soundEnabled, setSoundEnabled] = React.useState(true);
@@ -143,9 +147,18 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = () => {
 
   return (
     <SafeAreaView
+      edges={['left', 'right']}
       style={[styles.container, {backgroundColor: theme.background}]}>
       <MenuButton />
-      <ScrollView style={styles.scrollView}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={[
+          styles.scrollViewContent,
+          {
+            paddingTop: insets.top + hp('2%'),
+            paddingBottom: insets.bottom + hp('2%'),
+          },
+        ]}>
         <View style={styles.content}>
           <View style={styles.header}>
             <Text style={[styles.headerTitle, {color: theme.foreground}]}>
@@ -256,24 +269,26 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
+  scrollViewContent: {
+    flexGrow: 1,
+  },
   content: {
-    padding: 20,
-    gap: 20,
+    padding: wp('5%'),
+    gap: hp('2.5%'),
   },
   header: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: Platform.OS === 'ios' ? 100 : 60,
-    paddingBottom: 12,
+    paddingVertical: hp('2%'),
   },
   headerTitle: {
-    fontSize: 28,
+    fontSize: wp('7%'),
     fontFamily: 'Poppins-Bold',
     letterSpacing: 0.5,
-    marginBottom: 4,
+    marginBottom: hp('0.5%'),
   },
   headerSubtitle: {
-    fontSize: 15,
+    fontSize: wp('4%'),
     fontFamily: 'Poppins-Medium',
     letterSpacing: 0.3,
     opacity: 0.8,
@@ -312,79 +327,76 @@ const styles = StyleSheet.create({
   },
   themeOptions: {
     flexDirection: 'row',
-    gap: 12,
-    marginTop: 8,
-    paddingHorizontal: 16,
+    justifyContent: 'space-between',
+    gap: wp('3%'),
+    marginTop: hp('2%'),
   },
   themeOption: {
     flex: 1,
     flexDirection: 'row',
-    gap: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    gap: wp('2%'),
+    paddingVertical: hp('1.5%'),
+    paddingHorizontal: wp('3%'),
+    borderRadius: wp('2.5%'),
+    borderWidth: 1,
   },
   themeOptionText: {
-    fontSize: 14,
+    fontSize: wp('3.5%'),
     fontFamily: 'Poppins-Medium',
   },
   settingRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    justifyContent: 'space-between',
+    paddingVertical: hp('2%'),
     borderBottomWidth: 1,
   },
   settingInfo: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
+    gap: wp('4%'),
   },
   settingIconContainer: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: wp('10%'),
+    height: wp('10%'),
+    borderRadius: wp('5%'),
     justifyContent: 'center',
     alignItems: 'center',
   },
   settingTitle: {
-    fontSize: 16,
-    fontFamily: 'Poppins',
+    fontSize: wp('4%'),
+    fontFamily: 'Poppins-Medium',
   },
   accountOption: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 14,
-    paddingHorizontal: 16,
+    justifyContent: 'space-between',
+    paddingVertical: hp('2%'),
     borderBottomWidth: 1,
   },
   accountOptionInfo: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
+    gap: wp('4%'),
   },
   accountOptionText: {
-    fontSize: 16,
-    fontFamily: 'Poppins',
+    fontSize: wp('4%'),
+    fontFamily: 'Poppins-Medium',
   },
   logoutButton: {
     flexDirection: 'row',
-    gap: 8,
-    marginTop: 16,
-    marginHorizontal: 16,
-    paddingVertical: 12,
-    borderRadius: 8,
-    borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    gap: wp('2%'),
+    marginTop: hp('2%'),
+    paddingVertical: hp('1.5%'),
+    borderRadius: wp('2.5%'),
+    borderWidth: 1,
   },
   logoutText: {
-    fontSize: 16,
-    fontFamily: 'Poppins-Bold',
+    fontSize: wp('4%'),
+    fontFamily: 'Poppins-SemiBold',
   },
 });
