@@ -11,6 +11,7 @@ import {useColorScheme} from 'react-native';
 import {useThemeStore} from './src/store/useThemeStore';
 import {useAuthStore} from './src/store/useAuthStore';
 import {RootNavigator} from './src/navigation/RootNavigator';
+import 'react-native-gesture-handler';
 
 function App(): React.ReactElement {
   const systemColorScheme = useColorScheme();
