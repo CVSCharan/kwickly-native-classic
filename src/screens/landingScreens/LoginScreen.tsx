@@ -7,6 +7,7 @@ import {
   Image,
   Alert,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {LandingStackParamList} from '../../navigation/types';
@@ -116,10 +117,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
             onPress={() => {
               /* Google auth logic here */
             }}>
-            <Image
-              source={require('../../assets/images/google.png')}
-              style={styles.googleIcon}
-            />
+            <Icon name="logo-google" size={24} color={theme.foreground} />
             <Text style={[styles.googleButtonText, {color: theme.foreground}]}>
               Continue with Google
             </Text>
@@ -213,10 +211,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     gap: 12,
   },
-  googleIcon: {
-    width: 24,
-    height: 24,
-  },
+
   googleButtonText: {
     fontSize: 15,
     fontFamily: 'Poppins-Medium',
