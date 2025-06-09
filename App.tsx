@@ -14,13 +14,13 @@ import {RootNavigator} from './src/navigation/RootNavigator';
 
 function App(): React.ReactElement {
   const systemColorScheme = useColorScheme();
-  const setTheme = useThemeStore(state => state.setTheme);
+  const updateSystemTheme = useThemeStore(state => state.updateSystemTheme);
   const initialize = useAuthStore(state => state.initialize);
 
   // Handle system theme changes
   useEffect(() => {
-    setTheme(systemColorScheme === 'dark');
-  }, [systemColorScheme, setTheme]);
+    updateSystemTheme(systemColorScheme === 'dark');
+  }, [systemColorScheme, updateSystemTheme]);
 
   // Initialize auth state
   useEffect(() => {

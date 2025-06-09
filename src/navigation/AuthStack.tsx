@@ -1,6 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {DashboardScreen} from '../screens/DashboardScreen';
+import {TabNavigator} from './TabNavigator';
 import {AuthStackParamList} from './types';
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();
@@ -11,7 +11,7 @@ export const AuthStack = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="Dashboard" component={DashboardScreen} />
+      <Stack.Screen name="MainTabs" component={TabNavigator} />
     </Stack.Navigator>
   );
 };

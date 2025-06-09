@@ -4,9 +4,22 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useThemeStore} from '../store/useThemeStore';
 import {Button} from '../components/Button';
 import {Card} from '../components/Card';
+import {CompositeNavigationProp} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import {AuthStackParamList, TabParamList} from '../navigation/types';
 
-export const DashboardScreen = () => {
-  const {theme, toggleTheme} = useThemeStore();
+type DashboardScreenProps = {
+  navigation: CompositeNavigationProp<
+    BottomTabNavigationProp<TabParamList, 'Dashboard'>,
+    NativeStackNavigationProp<AuthStackParamList>
+  >;
+};
+
+export const DashboardScreen: React.FC<DashboardScreenProps> = ({
+  navigation,
+}) => {
+  const {theme} = useThemeStore();
 
   const renderStatItem = (value: string | number, label: string) => (
     <View style={styles.statItem}>
@@ -68,8 +81,8 @@ export const DashboardScreen = () => {
               Dashboard
             </Text>
             <Button
-              label="Toggle Theme"
-              onPress={toggleTheme}
+              label="Settings"
+              onPress={() => navigation.navigate('Settings')}
               variant="secondary"
               size="sm"
             />

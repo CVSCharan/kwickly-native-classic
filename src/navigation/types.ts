@@ -4,6 +4,11 @@ export type LandingStackParamList = {
 };
 
 export type AuthStackParamList = {
+  MainTabs: undefined;
+};
+
+export type TabParamList = {
   Dashboard: undefined;
-  // Add other authenticated screens here
+  Orders: undefined;
+  Settings: undefined;
 };
