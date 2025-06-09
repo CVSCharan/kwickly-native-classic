@@ -100,7 +100,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
         </Text>
       </View>
       <Text style={[styles.menuItemPrice, {color: theme.primary}]}>
-        ${item.price.toFixed(2)}
+        {formatIndianPrice(item.price)}
       </Text>
     </View>
   );
