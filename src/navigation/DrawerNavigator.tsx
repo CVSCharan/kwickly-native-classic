@@ -45,49 +45,47 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         paddingTop: Platform.OS === 'ios' ? 0 : insets.top,
       }}
       style={styles.drawer}>
-      <View style={styles.drawerHeader}>
+      <View style={[styles.drawerHeader, {borderBottomColor: theme.border}]}>
         <View style={styles.logoContainer}>
           <Image source={logo} style={styles.logo} resizeMode="contain" />
         </View>
       </View>
 
-      <View style={[styles.drawerSection, {borderTopColor: theme.border}]}>
-        <Text
-          style={[styles.drawerSectionTitle, {color: theme.mutedForeground}]}>
-          OPERATIONS
-        </Text>
-        <DrawerItemList {...props} />
-      </View>
+      <View style={styles.contentContainer}>
+        <View style={[styles.drawerSection, {borderTopColor: theme.border}]}>
+          <Text
+            style={[styles.drawerSectionTitle, {color: theme.mutedForeground}]}>
+            OPERATIONS
+          </Text>
+          <DrawerItemList {...props} />
+        </View>
 
-      <View
-        style={[
-          styles.drawerSection,
-          {borderTopColor: theme.border, marginBottom: wp('1%')},
-        ]}>
-        <Text
-          style={[styles.drawerSectionTitle, {color: theme.mutedForeground}]}>
-          ACCOUNT
-        </Text>
-        <TouchableOpacity style={styles.drawerItem} onPress={() => {}}>
-          <Icon
-            name="person-outline"
-            size={wp('5%')}
-            color={theme.foreground}
-          />
-          <Text style={[styles.drawerItemText, {color: theme.foreground}]}>
-            Profile
+        <View style={[styles.drawerSection, {borderTopColor: theme.border}]}>
+          <Text
+            style={[styles.drawerSectionTitle, {color: theme.mutedForeground}]}>
+            ACCOUNT
           </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.drawerItem} onPress={() => {}}>
-          <Icon
-            name="notifications-outline"
-            size={wp('5%')}
-            color={theme.foreground}
-          />
-          <Text style={[styles.drawerItemText, {color: theme.foreground}]}>
-            Notifications
-          </Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.drawerItem} onPress={() => {}}>
+            <Icon
+              name="person-outline"
+              size={wp('5%')}
+              color={theme.foreground}
+            />
+            <Text style={[styles.drawerItemText, {color: theme.foreground}]}>
+              Profile
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.drawerItem} onPress={() => {}}>
+            <Icon
+              name="notifications-outline"
+              size={wp('5%')}
+              color={theme.foreground}
+            />
+            <Text style={[styles.drawerItemText, {color: theme.foreground}]}>
+              Notifications
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <TouchableOpacity
@@ -173,17 +171,21 @@ const styles = StyleSheet.create({
   },
   drawerHeader: {
     padding: wp('6%'),
-    paddingBottom: hp('2%'),
+    paddingBottom: hp('3%'),
+    borderBottomWidth: 1.5,
   },
   logoContainer: {
     width: wp('30%'),
     height: wp('10%'),
-    marginBottom: hp('1%'),
-    marginTop: hp('1%'),
+    marginVertical: hp('1%'),
   },
   logo: {
     width: '100%',
     height: '100%',
+  },
+  contentContainer: {
+    flex: 1,
+    paddingTop: hp('2%'),
   },
   restaurantName: {
     fontSize: wp('5%'),
@@ -199,20 +201,23 @@ const styles = StyleSheet.create({
   drawerSection: {
     paddingTop: hp('2%'),
     borderTopWidth: 1.5,
+    marginBottom: hp('2%'),
   },
   drawerSectionTitle: {
     fontSize: wp('3%'),
     fontFamily: 'Poppins-SemiBold',
     letterSpacing: 1.2,
     paddingHorizontal: wp('6%'),
-    marginBottom: hp('1.5%'),
+    marginBottom: hp('2%'),
+    opacity: 0.8,
   },
   drawerItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: wp('4%'),
+    padding: wp('3.5%'),
     paddingHorizontal: wp('6%'),
     marginHorizontal: wp('3%'),
+    marginVertical: hp('0.5%'),
     borderRadius: 12,
     gap: wp('4%'),
   },
