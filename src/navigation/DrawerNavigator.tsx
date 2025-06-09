@@ -6,13 +6,13 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  Platform,
 } from 'react-native';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
   DrawerContentComponentProps,
-  DrawerNavigationProp,
 } from '@react-navigation/drawer';
 import {DashboardScreen} from '../screens/authScreens/DashboardScreen';
 import {OrdersScreen} from '../screens/authScreens/OrdersScreen';
@@ -22,43 +22,40 @@ import {useThemeStore} from '../store/useThemeStore';
 import {useThemeAssets} from '../hooks/useThemeAssets';
 import {useAuthStore} from '../store/useAuthStore';
 import {DrawerParamList} from './types';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 const {width} = Dimensions.get('window');
-
-type MenuButtonProps = {
-  navigation: DrawerNavigationProp<DrawerParamList>;
-};
-
-const MenuButton: React.FC<MenuButtonProps> = ({navigation}) => {
-  const {theme} = useThemeStore();
-
-  return (
-    <TouchableOpacity
-      style={[styles.menuButton, {backgroundColor: theme.background}]}
-      onPress={() => navigation.openDrawer()}>
-      <Icon name="menu-outline" size={24} color={theme.foreground} />
-    </TouchableOpacity>
-  );
-};
-
-const renderHeader =
-  (navigation: DrawerNavigationProp<DrawerParamList>) => () =>
-    <MenuButton navigation={navigation} />;
 
 const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   const {theme} = useThemeStore();
   const {logo} = useThemeAssets();
   const logout = useAuthStore(state => state.logout);
+  const insets = useSafeAreaInsets();
 
   return (
     <DrawerContentScrollView
       {...props}
-      style={{backgroundColor: theme.background}}>
+      contentContainerStyle={{
+        flexGrow: 1,
+        paddingTop: Platform.OS === 'ios' ? 0 : insets.top,
+      }}
+      style={[styles.drawer, {backgroundColor: theme.background}]}>
       <View style={[styles.drawerHeader, {borderBottomColor: theme.border}]}>
         <View style={styles.logoContainer}>
           <Image source={logo} style={styles.logo} resizeMode="contain" />
         </View>
+        <Text style={[styles.restaurantName, {color: theme.foreground}]}>
+          Kwickly Restaurant
+        </Text>
+        <Text
+          style={[styles.restaurantAddress, {color: theme.mutedForeground}]}>
+          123 Main Street, City
+        </Text>
       </View>
 
       <View style={styles.drawerSection}>
@@ -75,7 +72,11 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
           ACCOUNT
         </Text>
         <TouchableOpacity style={styles.drawerItem} onPress={() => {}}>
-          <Icon name="person-outline" size={22} color={theme.foreground} />
+          <Icon
+            name="person-outline"
+            size={wp('5%')}
+            color={theme.foreground}
+          />
           <Text style={[styles.drawerItemText, {color: theme.foreground}]}>
             Profile
           </Text>
@@ -83,7 +84,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         <TouchableOpacity style={styles.drawerItem} onPress={() => {}}>
           <Icon
             name="notifications-outline"
-            size={22}
+            size={wp('5%')}
             color={theme.foreground}
           />
           <Text style={[styles.drawerItemText, {color: theme.foreground}]}>
@@ -95,7 +96,11 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
       <TouchableOpacity
         style={[styles.logoutButton, {borderTopColor: theme.border}]}
         onPress={logout}>
-        <Icon name="log-out-outline" size={22} color={theme.destructive} />
+        <Icon
+          name="log-out-outline"
+          size={wp('5%')}
+          color={theme.destructive}
+        />
         <Text style={[styles.logoutText, {color: theme.destructive}]}>
           Logout
         </Text>
@@ -118,125 +123,114 @@ export const DrawerNavigator = () => {
         drawerActiveBackgroundColor: theme.primary + '15',
         drawerActiveTintColor: theme.primary,
         drawerInactiveTintColor: theme.foreground,
+        drawerItemStyle: {
+          borderRadius: wp('2%'),
+          paddingHorizontal: wp('2%'),
+          marginHorizontal: wp('3%'),
+        },
         drawerLabelStyle: {
           fontFamily: 'Poppins-Medium',
-          fontSize: 15,
-          marginLeft: -16,
+          fontSize: wp('3.8%'),
+          marginLeft: -wp('4%'),
         },
       }}
       drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen
         name="Dashboard"
         component={DashboardScreen}
-        options={({navigation}) => ({
+        options={{
           title: 'Dashboard',
-          drawerIcon: ({color, size}) => (
-            <Icon name="grid-outline" size={size} color={color} />
+          drawerIcon: ({color}) => (
+            <Icon name="grid-outline" size={wp('5%')} color={color} />
           ),
-          header: renderHeader(navigation),
-        })}
+        }}
       />
       <Drawer.Screen
         name="Orders"
         component={OrdersScreen}
-        options={({navigation}) => ({
+        options={{
           title: 'Orders',
-          drawerIcon: ({color, size}) => (
-            <Icon name="receipt-outline" size={size} color={color} />
+          drawerIcon: ({color}) => (
+            <Icon name="receipt-outline" size={wp('5%')} color={color} />
           ),
-          header: renderHeader(navigation),
-        })}
+        }}
       />
       <Drawer.Screen
         name="Settings"
         component={SettingsScreen}
-        options={({navigation}) => ({
+        options={{
           title: 'Settings',
-          drawerIcon: ({color, size}) => (
-            <Icon name="settings-outline" size={size} color={color} />
+          drawerIcon: ({color}) => (
+            <Icon name="settings-outline" size={wp('5%')} color={color} />
           ),
-          header: renderHeader(navigation),
-        })}
+        }}
       />
     </Drawer.Navigator>
   );
 };
 
 const styles = StyleSheet.create({
+  drawer: {
+    flex: 1,
+  },
   drawerHeader: {
-    padding: 24,
+    padding: wp('6%'),
     borderBottomWidth: 1,
-    marginBottom: 8,
+    marginBottom: hp('2%'),
   },
   logoContainer: {
-    width: 120,
-    height: 80,
-    marginBottom: 16,
+    width: wp('30%'),
+    height: wp('20%'),
+    marginBottom: hp('2%'),
   },
   logo: {
     width: '100%',
     height: '100%',
   },
   restaurantName: {
-    fontSize: 20,
+    fontSize: wp('5%'),
     fontFamily: 'Poppins-Bold',
-    marginBottom: 4,
+    marginBottom: hp('0.5%'),
   },
   restaurantAddress: {
-    fontSize: 14,
+    fontSize: wp('3.5%'),
     fontFamily: 'Poppins-Medium',
   },
   drawerSection: {
-    paddingTop: 16,
+    paddingTop: hp('2%'),
     borderTopWidth: 1,
   },
   drawerSectionTitle: {
-    fontSize: 12,
+    fontSize: wp('3%'),
     fontFamily: 'Poppins-SemiBold',
     letterSpacing: 1.2,
-    paddingHorizontal: 16,
-    marginBottom: 8,
+    paddingHorizontal: wp('6%'),
+    marginBottom: hp('1%'),
   },
   drawerItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
-    paddingLeft: 24,
+    padding: wp('4%'),
+    paddingHorizontal: wp('6%'),
+    marginHorizontal: wp('3%'),
+    borderRadius: wp('2%'),
   },
   drawerItemText: {
-    marginLeft: 32,
-    fontSize: 15,
+    marginLeft: wp('4%'),
+    fontSize: wp('3.8%'),
     fontFamily: 'Poppins-Medium',
   },
   logoutButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 20,
+    padding: wp('4%'),
+    paddingHorizontal: wp('6%'),
     marginTop: 'auto',
     borderTopWidth: 1,
-    gap: 12,
   },
   logoutText: {
-    fontSize: 16,
+    marginLeft: wp('4%'),
+    fontSize: wp('3.8%'),
     fontFamily: 'Poppins-SemiBold',
-  },
-  menuButton: {
-    position: 'absolute',
-    top: 48,
-    left: 24,
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 3.84,
-    elevation: 5,
-    zIndex: 100,
   },
 });

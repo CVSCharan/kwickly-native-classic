@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, Text, ScrollView, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  Platform,
+  StatusBar,
+} from 'react-native';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useThemeStore} from '../../store/useThemeStore';
 import {Card} from '../../components/Card';
@@ -26,6 +33,8 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
 }) => {
   const {theme} = useThemeStore();
   const insets = useSafeAreaInsets();
+  const statusBarHeight =
+    Platform.OS === 'android' ? StatusBar.currentHeight || 0 : 0;
 
   const renderStatItem = (
     value: string | number,
@@ -129,113 +138,131 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   };
 
   return (
-    <SafeAreaView
-      edges={['left', 'right']}
-      style={[styles.container, {backgroundColor: theme.background}]}>
-      <MenuButton />
-      <ScrollView
-        style={styles.scrollView}
-        contentContainerStyle={[
-          styles.scrollViewContent,
-          {
-            paddingTop: insets.top + hp('2%'),
-            paddingBottom: insets.bottom + hp('2%'),
-          },
-        ]}>
-        <View style={styles.content}>
-          <View style={styles.header}>
-            <Text style={[styles.headerTitle, {color: theme.foreground}]}>
-              Dashboard
-            </Text>
-            <Text
-              style={[styles.headerSubtitle, {color: theme.mutedForeground}]}>
-              Manage your store
-            </Text>
-          </View>
-          <Card title="Quick Stats" variant="glass">
-            <View style={styles.statsContainer}>
-              {renderStatItem(150, 'Orders Today', 'cart-outline')}
-              {renderStatItem(
-                formatIndianPrice(245000),
-                'Revenue',
-                'cash-outline',
-              )}
-              {renderStatItem(45, 'Active Tables', 'grid-outline')}
+    <>
+      <StatusBar
+        barStyle={
+          theme.foreground === '#ffffff' ? 'light-content' : 'dark-content'
+        }
+        backgroundColor={theme.background}
+        translucent
+      />
+      <SafeAreaView
+        edges={['left', 'right']}
+        style={[styles.container, {backgroundColor: theme.background}]}>
+        <MenuButton />
+        <ScrollView
+          style={styles.scrollView}
+          contentContainerStyle={[
+            styles.scrollViewContent,
+            {
+              paddingTop:
+                Platform.OS === 'ios'
+                  ? insets.top + hp('2%')
+                  : statusBarHeight + hp('2%'),
+              paddingBottom: insets.bottom + hp('2%'),
+            },
+          ]}>
+          <View style={styles.content}>
+            <View style={styles.header}>
+              <Text style={[styles.headerTitle, {color: theme.foreground}]}>
+                Dashboard
+              </Text>
+              <Text
+                style={[styles.headerSubtitle, {color: theme.mutedForeground}]}>
+                Manage your store
+              </Text>
             </View>
-          </Card>
-
-          <View style={styles.gridContainer}>
-            <Card style={styles.gridCard} variant="glass">
-              <View style={styles.gridCardHeader}>
-                <Icon name="time-outline" size={20} color={theme.primary} />
-                <Text style={[styles.gridTitle, {color: theme.cardForeground}]}>
-                  Pending Orders
-                </Text>
+            <Card title="Quick Stats" variant="glass">
+              <View style={styles.statsContainer}>
+                {renderStatItem(150, 'Orders Today', 'cart-outline')}
+                {renderStatItem(
+                  formatIndianPrice(245000),
+                  'Revenue',
+                  'cash-outline',
+                )}
+                {renderStatItem(45, 'Active Tables', 'grid-outline')}
               </View>
-              <Text style={[styles.gridValue, {color: theme.primary}]}>24</Text>
-              <Text style={[styles.gridLabel, {color: theme.mutedForeground}]}>
-                Awaiting preparation
-              </Text>
             </Card>
-            <Card style={styles.gridCard} variant="glass">
-              <View style={styles.gridCardHeader}>
-                <Icon
-                  name="restaurant-outline"
-                  size={20}
-                  color={theme.secondary}
-                />
-                <Text style={[styles.gridTitle, {color: theme.cardForeground}]}>
-                  Available Tables
+
+            <View style={styles.gridContainer}>
+              <Card style={styles.gridCard} variant="glass">
+                <View style={styles.gridCardHeader}>
+                  <Icon name="time-outline" size={20} color={theme.primary} />
+                  <Text
+                    style={[styles.gridTitle, {color: theme.cardForeground}]}>
+                    Pending Orders
+                  </Text>
+                </View>
+                <Text style={[styles.gridValue, {color: theme.primary}]}>
+                  24
                 </Text>
-              </View>
-              <Text style={[styles.gridValue, {color: theme.secondary}]}>
-                12
-              </Text>
-              <Text style={[styles.gridLabel, {color: theme.mutedForeground}]}>
-                Ready for seating
-              </Text>
+                <Text
+                  style={[styles.gridLabel, {color: theme.mutedForeground}]}>
+                  Awaiting preparation
+                </Text>
+              </Card>
+              <Card style={styles.gridCard} variant="glass">
+                <View style={styles.gridCardHeader}>
+                  <Icon
+                    name="restaurant-outline"
+                    size={20}
+                    color={theme.secondary}
+                  />
+                  <Text
+                    style={[styles.gridTitle, {color: theme.cardForeground}]}>
+                    Available Tables
+                  </Text>
+                </View>
+                <Text style={[styles.gridValue, {color: theme.secondary}]}>
+                  12
+                </Text>
+                <Text
+                  style={[styles.gridLabel, {color: theme.mutedForeground}]}>
+                  Ready for seating
+                </Text>
+              </Card>
+            </View>
+
+            <Card
+              title="Recent Orders"
+              actionLabel="View All"
+              onActionPress={() => navigation.navigate('Orders')}>
+              {[
+                {id: 1001, table: 1, items: 2, status: 'Preparing'},
+                {id: 1002, table: 2, items: 2, status: 'Ready'},
+                {id: 1003, table: 3, items: 2, status: 'Delivered'},
+              ].map((order, index, array) => (
+                <View
+                  key={order.id}
+                  style={[
+                    index !== array.length - 1 && {
+                      borderBottomWidth: 1,
+                      borderBottomColor: theme.border,
+                    },
+                  ]}>
+                  {renderOrderItem(order)}
+                </View>
+              ))}
+            </Card>
+
+            <Card
+              title="Popular Items"
+              actionLabel="Menu"
+              onActionPress={() => {}}>
+              {[
+                {name: 'Chicken Burger', price: 299},
+                {name: 'Caesar Salad', price: 249},
+                {name: 'Margherita Pizza', price: 399},
+              ].map((item, index, array) => (
+                <View key={item.name}>
+                  {renderMenuItem(item, index === array.length - 1)}
+                </View>
+              ))}
             </Card>
           </View>
-
-          <Card
-            title="Recent Orders"
-            actionLabel="View All"
-            onActionPress={() => navigation.navigate('Orders')}>
-            {[
-              {id: 1001, table: 1, items: 2, status: 'Preparing'},
-              {id: 1002, table: 2, items: 2, status: 'Ready'},
-              {id: 1003, table: 3, items: 2, status: 'Delivered'},
-            ].map((order, index, array) => (
-              <View
-                key={order.id}
-                style={[
-                  index !== array.length - 1 && {
-                    borderBottomWidth: 1,
-                    borderBottomColor: theme.border,
-                  },
-                ]}>
-                {renderOrderItem(order)}
-              </View>
-            ))}
-          </Card>
-
-          <Card
-            title="Popular Items"
-            actionLabel="Menu"
-            onActionPress={() => {}}>
-            {[
-              {name: 'Chicken Burger', price: 299},
-              {name: 'Caesar Salad', price: 249},
-              {name: 'Margherita Pizza', price: 399},
-            ].map((item, index, array) => (
-              <View key={item.name}>
-                {renderMenuItem(item, index === array.length - 1)}
-              </View>
-            ))}
-          </Card>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet, Platform} from 'react-native';
+import {TouchableOpacity, StyleSheet, Platform, StatusBar} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useThemeStore} from '../store/useThemeStore';
 import {useNavigation, DrawerActions} from '@react-navigation/native';
@@ -13,6 +13,8 @@ export const MenuButton = () => {
   const {theme} = useThemeStore();
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
+  const statusBarHeight =
+    Platform.OS === 'android' ? StatusBar.currentHeight || 0 : 0;
 
   return (
     <TouchableOpacity
@@ -21,7 +23,10 @@ export const MenuButton = () => {
         {
           backgroundColor: theme.background,
           shadowColor: theme.foreground,
-          top: Platform.OS === 'ios' ? insets.top + hp('2%') : hp('2%'),
+          top:
+            Platform.OS === 'ios'
+              ? insets.top + hp('2%')
+              : statusBarHeight + hp('2%'),
         },
       ]}
       onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
