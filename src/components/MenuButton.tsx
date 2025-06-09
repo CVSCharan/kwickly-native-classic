@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet} from 'react-native';
+import {TouchableOpacity, StyleSheet, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useThemeStore} from '../store/useThemeStore';
 import {useNavigation, DrawerActions} from '@react-navigation/native';
@@ -10,9 +10,15 @@ export const MenuButton = () => {
 
   return (
     <TouchableOpacity
-      style={[styles.menuButton, {backgroundColor: theme.background}]}
+      style={[
+        styles.menuButton,
+        {
+          backgroundColor: theme.background,
+          shadowColor: theme.foreground,
+        },
+      ]}
       onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
-      <Icon name="menu-outline" size={24} color={theme.foreground} />
+      <Icon name="menu-outline" size={22} color={theme.foreground} />
     </TouchableOpacity>
   );
 };
@@ -20,21 +26,26 @@ export const MenuButton = () => {
 const styles = StyleSheet.create({
   menuButton: {
     position: 'absolute',
-    top: 48,
-    left: 24,
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    top: Platform.OS === 'ios' ? 60 : 20,
+    left: 20,
+    width: 40,
+    height: 40,
+    borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 3.84,
-    elevation: 5,
+    ...Platform.select({
+      ios: {
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
+      },
+      android: {
+        elevation: 3,
+      },
+    }),
     zIndex: 100,
   },
 });

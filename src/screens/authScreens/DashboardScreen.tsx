@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, ScrollView, StyleSheet} from 'react-native';
+import {View, Text, ScrollView, StyleSheet, Platform} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useThemeStore} from '../../store/useThemeStore';
 import {Card} from '../../components/Card';
@@ -233,15 +233,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    padding: 24,
-    paddingTop: 0,
-    gap: 24,
+    padding: 20,
+    gap: 20,
   },
   header: {
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 12,
-    marginBottom: 16,
+    paddingTop: Platform.OS === 'ios' ? 100 : 60,
+    paddingBottom: 12,
   },
   headerTitle: {
     fontSize: 28,

@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useThemeStore} from '../../store/useThemeStore';
@@ -252,40 +253,46 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
     <SafeAreaView
       style={[styles.container, {backgroundColor: theme.background}]}>
       <MenuButton />
-      <View style={styles.header}>
-        <Text style={[styles.headerTitle, {color: theme.foreground}]}>
-          Orders
-        </Text>
-        <Text style={[styles.headerSubtitle, {color: theme.mutedForeground}]}>
-          Manage and track your orders
-        </Text>
-      </View>
+      <View style={styles.scrollView}>
+        <View style={styles.content}>
+          <View style={styles.header}>
+            <Text style={[styles.headerTitle, {color: theme.foreground}]}>
+              Orders
+            </Text>
+            <Text
+              style={[styles.headerSubtitle, {color: theme.mutedForeground}]}>
+              Manage and track your orders
+            </Text>
+          </View>
 
-      <View style={styles.filterContainer}>
-        {(['All', 'Preparing', 'Ready', 'Delivered', 'Cancelled'] as const).map(
-          status => renderStatusFilter(status),
-        )}
-      </View>
+          <View style={styles.filterContainer}>
+            {(
+              ['All', 'Preparing', 'Ready', 'Delivered', 'Cancelled'] as const
+            ).map(status => renderStatusFilter(status))}
+          </View>
 
-      {filteredOrders.length === 0 ? (
-        <View style={styles.emptyContainer}>
-          <Icon
-            name="receipt-outline"
-            size={60}
-            color={theme.mutedForeground}
-          />
-          <Text style={[styles.emptyText, {color: theme.foreground}]}>
-            No orders found
-          </Text>
-          <Text style={[styles.emptySubtext, {color: theme.mutedForeground}]}>
-            Try changing your filter
-          </Text>
+          {filteredOrders.length === 0 ? (
+            <View style={styles.emptyContainer}>
+              <Icon
+                name="receipt-outline"
+                size={60}
+                color={theme.mutedForeground}
+              />
+              <Text style={[styles.emptyText, {color: theme.foreground}]}>
+                No orders found
+              </Text>
+              <Text
+                style={[styles.emptySubtext, {color: theme.mutedForeground}]}>
+                Try changing your filter
+              </Text>
+            </View>
+          ) : (
+            <ScrollView style={styles.ordersList}>
+              {filteredOrders.map(order => renderOrderItem(order))}
+            </ScrollView>
+          )}
         </View>
-      ) : (
-        <ScrollView style={styles.ordersList}>
-          {filteredOrders.map(order => renderOrderItem(order))}
-        </ScrollView>
-      )}
+      </View>
     </SafeAreaView>
   );
 };
@@ -294,11 +301,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  scrollView: {
+    flex: 1,
+  },
+  content: {
+    padding: 20,
+    gap: 20,
+  },
   header: {
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 12,
-    marginBottom: 16,
+    paddingTop: Platform.OS === 'ios' ? 100 : 60,
+    paddingBottom: 12,
   },
   headerTitle: {
     fontSize: 28,

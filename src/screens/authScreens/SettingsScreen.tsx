@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Switch,
   ScrollView,
+  Platform,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useThemeStore, ThemeMode} from '../../store/useThemeStore';
@@ -255,11 +256,15 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
+  content: {
+    padding: 20,
+    gap: 20,
+  },
   header: {
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 12,
-    marginBottom: 16,
+    paddingTop: Platform.OS === 'ios' ? 100 : 60,
+    paddingBottom: 12,
   },
   headerTitle: {
     fontSize: 28,
@@ -272,12 +277,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Medium',
     letterSpacing: 0.3,
     opacity: 0.8,
-  },
-  content: {
-    flex: 1,
-    padding: 24,
-    paddingTop: 0,
-    gap: 24,
   },
   sectionCard: {
     padding: 0,

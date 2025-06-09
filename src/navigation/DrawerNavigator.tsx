@@ -59,13 +59,6 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         <View style={styles.logoContainer}>
           <Image source={logo} style={styles.logo} resizeMode="contain" />
         </View>
-        <Text style={[styles.restaurantName, {color: theme.foreground}]}>
-          Kwickly Restaurant
-        </Text>
-        <Text
-          style={[styles.restaurantAddress, {color: theme.mutedForeground}]}>
-          123 Main Street, City
-        </Text>
       </View>
 
       <View style={styles.drawerSection}>
