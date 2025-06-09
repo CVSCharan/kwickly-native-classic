@@ -310,6 +310,8 @@ const styles = StyleSheet.create({
     margin: 24,
     padding: 18,
     borderRadius: 20,
+    borderWidth: 1, // Added border to replace shadow
+    // Shadow removed
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -341,6 +343,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     borderWidth: 1.5,
     gap: 10,
+    // Shadow removed
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -383,14 +386,8 @@ const styles = StyleSheet.create({
   orderCard: {
     marginBottom: 24,
     borderRadius: 20,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.12,
-    shadowRadius: 5,
-    elevation: 5,
+    borderWidth: 1, // Added border to replace shadow
+    // Shadow removed
     padding: 0,
     overflow: 'hidden',
   },
@@ -411,6 +408,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     justifyContent: 'center',
     alignItems: 'center',
+    // Shadow removed
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

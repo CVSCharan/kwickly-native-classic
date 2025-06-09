@@ -242,14 +242,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 14,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.12,
-    shadowRadius: 4,
-    elevation: 4,
+    // Shadow removed
   },
   statValue: {
     fontSize: 24,
@@ -315,14 +308,7 @@ const styles = StyleSheet.create({
     borderRadius: 22,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.12,
-    shadowRadius: 4,
-    elevation: 4,
+    // Shadow removed
   },
   orderTitle: {
     fontSize: 15,
@@ -363,14 +349,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.12,
-    shadowRadius: 4,
-    elevation: 4,
+    // Shadow removed
   },
   menuItemName: {
     fontSize: 15,
