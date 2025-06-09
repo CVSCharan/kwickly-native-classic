@@ -12,6 +12,7 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
   DrawerContentComponentProps,
+  DrawerNavigationProp,
 } from '@react-navigation/drawer';
 import {DashboardScreen} from '../screens/authScreens/DashboardScreen';
 import {OrdersScreen} from '../screens/authScreens/OrdersScreen';
@@ -20,9 +21,30 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {useThemeStore} from '../store/useThemeStore';
 import {useThemeAssets} from '../hooks/useThemeAssets';
 import {useAuthStore} from '../store/useAuthStore';
+import {DrawerParamList} from './types';
 
-const Drawer = createDrawerNavigator();
+const Drawer = createDrawerNavigator<DrawerParamList>();
 const {width} = Dimensions.get('window');
+
+type MenuButtonProps = {
+  navigation: DrawerNavigationProp<DrawerParamList>;
+};
+
+const MenuButton: React.FC<MenuButtonProps> = ({navigation}) => {
+  const {theme} = useThemeStore();
+
+  return (
+    <TouchableOpacity
+      style={[styles.menuButton, {backgroundColor: theme.background}]}
+      onPress={() => navigation.openDrawer()}>
+      <Icon name="menu-outline" size={24} color={theme.foreground} />
+    </TouchableOpacity>
+  );
+};
+
+const renderHeader =
+  (navigation: DrawerNavigationProp<DrawerParamList>) => () =>
+    <MenuButton navigation={navigation} />;
 
 const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   const {theme} = useThemeStore();
@@ -95,19 +117,7 @@ export const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
       screenOptions={{
-        headerShown: true,
-        headerStyle: {
-          backgroundColor: theme.background,
-          elevation: 0,
-          shadowOpacity: 0,
-          borderBottomWidth: 1,
-          borderBottomColor: theme.border,
-        },
-        headerTintColor: theme.foreground,
-        headerTitleStyle: {
-          fontFamily: 'Poppins-SemiBold',
-          fontSize: 18,
-        },
+        headerShown: false,
         drawerStyle: {
           backgroundColor: theme.background,
           width: Math.min(width * 0.85, 360),
@@ -125,32 +135,35 @@ export const DrawerNavigator = () => {
       <Drawer.Screen
         name="Dashboard"
         component={DashboardScreen}
-        options={{
+        options={({navigation}) => ({
           title: 'Dashboard',
           drawerIcon: ({color, size}) => (
             <Icon name="grid-outline" size={size} color={color} />
           ),
-        }}
+          header: renderHeader(navigation),
+        })}
       />
       <Drawer.Screen
         name="Orders"
         component={OrdersScreen}
-        options={{
+        options={({navigation}) => ({
           title: 'Orders',
           drawerIcon: ({color, size}) => (
             <Icon name="receipt-outline" size={size} color={color} />
           ),
-        }}
+          header: renderHeader(navigation),
+        })}
       />
       <Drawer.Screen
         name="Settings"
         component={SettingsScreen}
-        options={{
+        options={({navigation}) => ({
           title: 'Settings',
           drawerIcon: ({color, size}) => (
             <Icon name="settings-outline" size={size} color={color} />
           ),
-        }}
+          header: renderHeader(navigation),
+        })}
       />
     </Drawer.Navigator>
   );
@@ -213,5 +226,24 @@ const styles = StyleSheet.create({
   logoutText: {
     fontSize: 16,
     fontFamily: 'Poppins-SemiBold',
+  },
+  menuButton: {
+    position: 'absolute',
+    top: 48,
+    left: 24,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 3.84,
+    elevation: 5,
+    zIndex: 100,
   },
 });

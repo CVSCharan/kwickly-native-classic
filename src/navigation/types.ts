@@ -9,7 +9,9 @@ export type AuthStackParamList = {
 };
 
 export type DrawerParamList = {
-  MainTabs: undefined;
+  Dashboard: undefined;
+  Orders: undefined;
+  Settings: undefined;
 };
 
 export type TabParamList = {
