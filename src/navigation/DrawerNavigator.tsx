@@ -120,8 +120,9 @@ export const DrawerNavigator = () => {
         drawerInactiveTintColor: theme.foreground,
         drawerItemStyle: {
           borderRadius: 12,
-          paddingHorizontal: wp('4%'),
+          paddingHorizontal: wp('6%'),
           marginHorizontal: wp('3%'),
+          marginVertical: hp('0.5%'),
         },
         drawerLabelStyle: {
           fontFamily: 'Poppins-Medium',
@@ -171,13 +172,12 @@ const styles = StyleSheet.create({
   },
   drawerHeader: {
     padding: wp('6%'),
-    paddingBottom: hp('3%'),
+    paddingBottom: hp('2%'),
     borderBottomWidth: 1.5,
   },
   logoContainer: {
     width: wp('30%'),
     height: wp('10%'),
-    marginVertical: hp('1%'),
   },
   logo: {
     width: '100%',
@@ -185,7 +185,6 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    paddingTop: hp('2%'),
   },
   restaurantName: {
     fontSize: wp('5%'),
@@ -201,14 +200,14 @@ const styles = StyleSheet.create({
   drawerSection: {
     paddingTop: hp('2%'),
     borderTopWidth: 1.5,
-    marginBottom: hp('2%'),
+    marginBottom: hp('1%'),
   },
   drawerSectionTitle: {
     fontSize: wp('3%'),
     fontFamily: 'Poppins-SemiBold',
     letterSpacing: 1.2,
     paddingHorizontal: wp('6%'),
-    marginBottom: hp('2%'),
+    marginBottom: hp('1%'),
     opacity: 0.8,
   },
   drawerItem: {
