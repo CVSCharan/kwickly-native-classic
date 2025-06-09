@@ -26,14 +26,6 @@ export const ThemeProvider: React.FC<{children: React.ReactNode}> = ({
 
   const theme = isDark ? darkTheme : lightTheme;
 
-  // Apply theme variables to the root style
-  useEffect(() => {
-    const root = document.documentElement;
-    Object.entries(theme).forEach(([key, value]) => {
-      root?.style.setProperty(key, value);
-    });
-  }, [theme]);
-
   return (
     <ThemeContext.Provider value={{theme, isDark, toggleTheme}}>
       {children}
