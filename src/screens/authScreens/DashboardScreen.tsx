@@ -8,6 +8,7 @@ import {CompositeNavigationProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {AuthStackParamList, TabParamList} from '../../navigation/types';
+import {formatIndianPrice} from '../../utils/currency';
 
 type DashboardScreenProps = {
   navigation: CompositeNavigationProp<
@@ -76,22 +77,10 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
       style={[styles.container, {backgroundColor: theme.background}]}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.content}>
-          <View style={styles.header}>
-            <Text style={[styles.headerTitle, {color: theme.foreground}]}>
-              Dashboard
-            </Text>
-            <Button
-              label="Settings"
-              onPress={() => navigation.navigate('Settings')}
-              variant="secondary"
-              size="sm"
-            />
-          </View>
-
           <Card title="Quick Stats">
             <View style={styles.statsContainer}>
               {renderStatItem(150, 'Orders Today')}
-              {renderStatItem('$2,450', 'Revenue')}
+              {renderStatItem(formatIndianPrice(245000), 'Revenue')}
               {renderStatItem(45, 'Active Tables')}
             </View>
           </Card>
@@ -141,9 +130,9 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
 
           <Card title="Popular Items">
             {[
-              {name: 'Chicken Burger', price: 12.99},
-              {name: 'Caesar Salad', price: 9.99},
-              {name: 'Margherita Pizza', price: 14.99},
+              {name: 'Chicken Burger', price: 299},
+              {name: 'Caesar Salad', price: 249},
+              {name: 'Margherita Pizza', price: 399},
             ].map((item, index, array) => (
               <View key={item.name}>
                 {renderMenuItem(item, index === array.length - 1)}
@@ -166,16 +155,6 @@ const styles = StyleSheet.create({
   content: {
     padding: 24,
     gap: 24,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  headerTitle: {
-    fontSize: 24,
-    fontFamily: 'Poppins-Bold',
   },
   statsContainer: {
     flexDirection: 'row',

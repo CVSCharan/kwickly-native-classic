@@ -16,7 +16,7 @@ type SettingsScreenProps = {
   >;
 };
 
-export const SettingsScreen: React.FC<SettingsScreenProps> = ({navigation}) => {
+export const SettingsScreen: React.FC<SettingsScreenProps> = () => {
   const {theme, mode, setMode} = useThemeStore();
   const logout = useAuthStore(state => state.logout);
 
@@ -57,8 +57,6 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({navigation}) => {
     <SafeAreaView
       style={[styles.container, {backgroundColor: theme.background}]}>
       <View style={styles.content}>
-        <Text style={[styles.title, {color: theme.foreground}]}>Settings</Text>
-
         <Card title="Theme">
           <View style={styles.themeOptions}>
             {themeOptions.map(renderThemeOption)}
@@ -87,11 +85,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     gap: 24,
-  },
-  title: {
-    fontSize: 24,
-    fontFamily: 'Poppins-Bold',
-    marginBottom: 8,
   },
   themeOptions: {
     flexDirection: 'row',

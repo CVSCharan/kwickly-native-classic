@@ -15,6 +15,7 @@ import {CompositeNavigationProp} from '@react-navigation/native';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AuthStackParamList, TabParamList} from '../../navigation/types';
+import {formatIndianPrice} from '../../utils/currency';
 
 type OrdersScreenProps = {
   navigation: CompositeNavigationProp<
@@ -40,7 +41,7 @@ const MOCK_ORDERS: Order[] = [
     table: 1,
     items: 3,
     status: 'Preparing',
-    total: 45.97,
+    total: 3499,
     time: '10:30 AM',
   },
   {
@@ -48,7 +49,7 @@ const MOCK_ORDERS: Order[] = [
     table: 2,
     items: 2,
     status: 'Ready',
-    total: 27.98,
+    total: 2199,
     time: '10:45 AM',
   },
   {
@@ -56,7 +57,7 @@ const MOCK_ORDERS: Order[] = [
     table: 3,
     items: 4,
     status: 'Delivered',
-    total: 89.96,
+    total: 6999,
     time: '11:00 AM',
   },
   {
@@ -64,7 +65,7 @@ const MOCK_ORDERS: Order[] = [
     table: 4,
     items: 1,
     status: 'Cancelled',
-    total: 12.99,
+    total: 999,
     time: '11:15 AM',
   },
 ];
@@ -145,7 +146,7 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
             Total
           </Text>
           <Text style={[styles.detailValue, {color: theme.primary}]}>
-            ${order.total.toFixed(2)}
+            {formatIndianPrice(order.total)}
           </Text>
         </View>
       </View>
@@ -182,10 +183,6 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
   return (
     <SafeAreaView
       style={[styles.container, {backgroundColor: theme.background}]}>
-      <View style={styles.header}>
-        <Text style={[styles.title, {color: theme.foreground}]}>Orders</Text>
-      </View>
-
       <View style={[styles.searchContainer, {backgroundColor: theme.card}]}>
         <Icon name="search-outline" size={20} color={theme.mutedForeground} />
         <TextInput
@@ -216,21 +213,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  header: {
-    padding: 24,
-    paddingBottom: 12,
-    borderBottomWidth: 1,
-  },
-  title: {
-    fontSize: 28,
-    fontFamily: 'Poppins-Bold',
-    letterSpacing: 0.5,
-  },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     margin: 24,
-    marginTop: 16,
     marginBottom: 16,
     padding: 14,
     borderRadius: 12,
