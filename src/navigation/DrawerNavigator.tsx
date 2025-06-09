@@ -51,7 +51,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         </View>
       </View>
 
-      <View style={styles.drawerSection}>
+      <View style={[styles.drawerSection, {borderTopColor: theme.border}]}>
         <Text
           style={[styles.drawerSectionTitle, {color: theme.mutedForeground}]}>
           OPERATIONS
@@ -59,7 +59,11 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         <DrawerItemList {...props} />
       </View>
 
-      <View style={[styles.drawerSection, {borderTopColor: theme.border}]}>
+      <View
+        style={[
+          styles.drawerSection,
+          {borderTopColor: theme.border, marginBottom: wp('1%')},
+        ]}>
         <Text
           style={[styles.drawerSectionTitle, {color: theme.mutedForeground}]}>
           ACCOUNT
