@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Switch, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Switch,
+  ScrollView,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useThemeStore, ThemeMode} from '../../store/useThemeStore';
 import {useAuthStore} from '../../store/useAuthStore';
@@ -31,20 +38,21 @@ const SettingsSection: React.FC<SettingsSectionProps> = ({
   children,
 }) => {
   const {theme} = useThemeStore();
-  
+
   return (
     <Card style={styles.sectionCard}>
       <View style={styles.sectionHeader}>
         <View style={styles.sectionTitleContainer}>
-          <View 
+          <View
             style={[
-              styles.sectionIconContainer, 
-              {backgroundColor: (iconColor || theme.primary) + '15'}
-            ]}
-          >
+              styles.sectionIconContainer,
+              {backgroundColor: (iconColor || theme.primary) + '15'},
+            ]}>
             <Icon name={icon} size={18} color={iconColor || theme.primary} />
           </View>
-          <Text style={[styles.sectionTitle, {color: theme.foreground}]}>{title}</Text>
+          <Text style={[styles.sectionTitle, {color: theme.foreground}]}>
+            {title}
+          </Text>
         </View>
       </View>
       <View style={styles.sectionContent}>{children}</View>
@@ -64,7 +72,11 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = () => {
     {label: 'System', value: 'system', icon: 'phone-portrait-outline'},
   ];
 
-  const renderThemeOption = (option: {label: string; value: ThemeMode; icon: string}) => (
+  const renderThemeOption = (option: {
+    label: string;
+    value: ThemeMode;
+    icon: string;
+  }) => (
     <TouchableOpacity
       key={option.value}
       style={[
@@ -76,10 +88,12 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = () => {
         },
       ]}
       onPress={() => setMode(option.value)}>
-      <Icon 
-        name={option.icon} 
-        size={18} 
-        color={mode === option.value ? theme.primaryForeground : theme.foreground} 
+      <Icon
+        name={option.icon}
+        size={18}
+        color={
+          mode === option.value ? theme.primaryForeground : theme.foreground
+        }
       />
       <Text
         style={[
@@ -97,23 +111,24 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = () => {
   );
 
   const renderSettingRow = (
-    title: string, 
-    icon: string, 
-    value: boolean, 
+    title: string,
+    icon: string,
+    value: boolean,
     onValueChange: (value: boolean) => void,
-    iconColor?: string
+    iconColor?: string,
   ) => (
     <View style={[styles.settingRow, {borderBottomColor: theme.border}]}>
       <View style={styles.settingInfo}>
-        <View 
+        <View
           style={[
-            styles.settingIconContainer, 
-            {backgroundColor: (iconColor || theme.primary) + '15'}
-          ]}
-        >
+            styles.settingIconContainer,
+            {backgroundColor: (iconColor || theme.primary) + '15'},
+          ]}>
           <Icon name={icon} size={18} color={iconColor || theme.primary} />
         </View>
-        <Text style={[styles.settingTitle, {color: theme.foreground}]}>{title}</Text>
+        <Text style={[styles.settingTitle, {color: theme.foreground}]}>
+          {title}
+        </Text>
       </View>
       <Switch
         value={value}
@@ -129,13 +144,12 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = () => {
       style={[styles.container, {backgroundColor: theme.background}]}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.content}>
-          <View style={styles.header}>
-            <Text style={[styles.title, {color: theme.foreground}]}>Settings</Text>
-            <Text style={[styles.subtitle, {color: theme.mutedForeground}]}>Customize your experience</Text>
-          </View>
-
           <SettingsSection title="Appearance" icon="color-palette-outline">
-            <Text style={[styles.sectionDescription, {color: theme.mutedForeground}]}>
+            <Text
+              style={[
+                styles.sectionDescription,
+                {color: theme.mutedForeground},
+              ]}>
               Choose your preferred theme mode
             </Text>
             <View style={styles.themeOptions}>
@@ -143,42 +157,75 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = () => {
             </View>
           </SettingsSection>
 
-          <SettingsSection title="Notifications" icon="notifications-outline" iconColor="#6366f1">
+          <SettingsSection
+            title="Notifications"
+            icon="notifications-outline"
+            iconColor="#6366f1">
             {renderSettingRow(
-              'Push Notifications', 
-              'push-outline', 
-              notificationsEnabled, 
-              setNotificationsEnabled
+              'Push Notifications',
+              'push-outline',
+              notificationsEnabled,
+              setNotificationsEnabled,
             )}
             {renderSettingRow(
-              'Sound Effects', 
-              'volume-high-outline', 
-              soundEnabled, 
-              setSoundEnabled
+              'Sound Effects',
+              'volume-high-outline',
+              soundEnabled,
+              setSoundEnabled,
             )}
           </SettingsSection>
 
-          <SettingsSection title="Account" icon="person-outline" iconColor="#10b981">
-            <TouchableOpacity style={[styles.accountOption, {borderBottomColor: theme.border}]}>
+          <SettingsSection
+            title="Account"
+            icon="person-outline"
+            iconColor="#10b981">
+            <TouchableOpacity
+              style={[styles.accountOption, {borderBottomColor: theme.border}]}>
               <View style={styles.accountOptionInfo}>
-                <Icon name="person-circle-outline" size={18} color={theme.foreground} />
-                <Text style={[styles.accountOptionText, {color: theme.foreground}]}>Profile Settings</Text>
+                <Icon
+                  name="person-circle-outline"
+                  size={18}
+                  color={theme.foreground}
+                />
+                <Text
+                  style={[styles.accountOptionText, {color: theme.foreground}]}>
+                  Profile Settings
+                </Text>
               </View>
-              <Icon name="chevron-forward-outline" size={18} color={theme.mutedForeground} />
+              <Icon
+                name="chevron-forward-outline"
+                size={18}
+                color={theme.mutedForeground}
+              />
             </TouchableOpacity>
-            
-            <TouchableOpacity style={[styles.accountOption, {borderBottomColor: theme.border}]}>
+
+            <TouchableOpacity
+              style={[styles.accountOption, {borderBottomColor: theme.border}]}>
               <View style={styles.accountOptionInfo}>
                 <Icon name="key-outline" size={18} color={theme.foreground} />
-                <Text style={[styles.accountOptionText, {color: theme.foreground}]}>Change Password</Text>
+                <Text
+                  style={[styles.accountOptionText, {color: theme.foreground}]}>
+                  Change Password
+                </Text>
               </View>
-              <Icon name="chevron-forward-outline" size={18} color={theme.mutedForeground} />
+              <Icon
+                name="chevron-forward-outline"
+                size={18}
+                color={theme.mutedForeground}
+              />
             </TouchableOpacity>
-            
+
             <TouchableOpacity
-              style={[styles.logoutButton, {borderColor: theme.destructive + '30'}]}
+              style={[
+                styles.logoutButton,
+                {borderColor: theme.destructive + '30'},
+              ]}
               onPress={logout}>
-              <Icon name="log-out-outline" size={18} color={theme.destructive} />
+              <Icon
+                name="log-out-outline"
+                size={18}
+                color={theme.destructive}
+              />
               <Text style={[styles.logoutText, {color: theme.destructive}]}>
                 Logout
               </Text>
@@ -201,18 +248,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     gap: 24,
-  },
-  header: {
-    marginBottom: 8,
-  },
-  title: {
-    fontSize: 28,
-    fontFamily: 'Poppins-Bold',
-  },
-  subtitle: {
-    fontSize: 14,
-    fontFamily: 'Poppins',
-    marginTop: 4,
   },
   sectionCard: {
     padding: 0,
