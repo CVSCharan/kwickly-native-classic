@@ -1,13 +1,12 @@
 import React from 'react';
-import {View, Text, TextInput, TextInputProps, StyleSheet} from 'react-native';
+import {View, Text, TextInput, StyleSheet, TextInputProps} from 'react-native';
 import {useThemeStore} from '../store/useThemeStore';
 
-type InputProps = TextInputProps & {
+interface InputProps extends TextInputProps {
   label?: string;
   error?: string;
-  style?: any;
   containerStyle?: any;
-};
+}
 
 export const Input: React.FC<InputProps> = ({
   label,
@@ -48,14 +47,17 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   label: {
+    marginBottom: 6,
     fontSize: 14,
-    fontFamily: 'Poppins',
-    marginBottom: 4,
+    fontFamily: 'Poppins-Medium',
+    letterSpacing: 0.2,
   },
   input: {
-    padding: 12,
-    borderRadius: 8,
+    height: 40,
     borderWidth: 1,
+    borderRadius: 4,
+    paddingHorizontal: 12,
+    fontSize: 14,
     fontFamily: 'Poppins',
   },
   error: {

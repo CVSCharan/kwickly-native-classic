@@ -69,22 +69,22 @@ export const Button: React.FC<ButtonProps> = ({
   const getPadding = () => {
     switch (size) {
       case 'sm':
-        return {paddingVertical: 8, paddingHorizontal: 12};
+        return {paddingVertical: 6, paddingHorizontal: 12};
       case 'lg':
-        return {paddingVertical: 16, paddingHorizontal: 24};
+        return {paddingVertical: 12, paddingHorizontal: 24};
       default: // md
-        return {paddingVertical: 12, paddingHorizontal: 16};
+        return {paddingVertical: 8, paddingHorizontal: 16};
     }
   };
 
   const getFontSize = () => {
     switch (size) {
       case 'sm':
-        return 14;
+        return 13;
       case 'lg':
-        return 18;
-      default: // md
         return 16;
+      default: // md
+        return 14;
     }
   };
 
@@ -97,6 +97,20 @@ export const Button: React.FC<ButtonProps> = ({
       opacity: disabled ? 0.5 : 1,
       borderWidth: variant === 'outline' ? 1 : 0,
       borderColor: variant === 'outline' ? theme.primary : undefined,
+      shadowColor:
+        variant === 'primary' || variant === 'secondary' ? '#000' : undefined,
+      shadowOffset:
+        variant === 'primary' || variant === 'secondary'
+          ? {
+              width: 0,
+              height: 1,
+            }
+          : undefined,
+      shadowOpacity:
+        variant === 'primary' || variant === 'secondary' ? 0.2 : undefined,
+      shadowRadius:
+        variant === 'primary' || variant === 'secondary' ? 2 : undefined,
+      elevation: variant === 'primary' || variant === 'secondary' ? 2 : 0,
     },
     style,
   ];
@@ -106,6 +120,7 @@ export const Button: React.FC<ButtonProps> = ({
     {
       color: getTextColor(),
       fontSize: getFontSize(),
+      letterSpacing: 0.3,
     },
   ];
 
@@ -134,14 +149,14 @@ export const Button: React.FC<ButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 8,
+    borderRadius: 4,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
   text: {
-    fontFamily: 'Poppins',
-    fontWeight: '600',
+    fontFamily: 'Poppins-Medium',
+    textAlign: 'center',
   },
   icon: {
     marginRight: 8,
