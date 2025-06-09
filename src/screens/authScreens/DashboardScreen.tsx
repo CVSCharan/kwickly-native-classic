@@ -4,11 +4,11 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useThemeStore} from '../../store/useThemeStore';
 import {Button} from '../../components/Button';
 import {Card} from '../../components/Card';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {CompositeNavigationProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {AuthStackParamList, TabParamList} from '../../navigation/types';
-import {formatIndianPrice} from '../../utils/currency';
 
 type DashboardScreenProps = {
   navigation: CompositeNavigationProp<
@@ -22,8 +22,11 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
 }) => {
   const {theme} = useThemeStore();
 
-  const renderStatItem = (value: string | number, label: string) => (
+  const renderStatItem = (value: string | number, label: string, icon: string) => (
     <View style={styles.statItem}>
+      <View style={[styles.statIconContainer, {backgroundColor: theme.primary + '15'}]}>
+        <Icon name={icon} size={22} color={theme.primary} />
+      </View>
       <Text style={[styles.statValue, {color: theme.primary}]}>{value}</Text>
       <Text style={[styles.statLabel, {color: theme.mutedForeground}]}>
         {label}
@@ -38,16 +41,25 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
     status: string;
   }) => (
     <View style={[styles.orderItem, {borderBottomColor: theme.border}]}>
-      <View>
-        <Text style={[styles.orderTitle, {color: theme.cardForeground}]}>
-          Order #{order.id}
-        </Text>
-        <Text style={[styles.orderSubtitle, {color: theme.mutedForeground}]}>
-          Table {order.table} • {order.items} items
-        </Text>
+      <View style={styles.orderItemLeft}>
+        <View style={[styles.orderIconContainer, {backgroundColor: theme.secondary + '15'}]}>
+          <Icon name="receipt-outline" size={18} color={theme.secondary} />
+        </View>
+        <View>
+          <Text style={[styles.orderTitle, {color: theme.cardForeground}]}>
+            Order #{order.id}
+          </Text>
+          <Text style={[styles.orderSubtitle, {color: theme.mutedForeground}]}>
+            Table {order.table} • {order.items} items
+          </Text>
+        </View>
       </View>
-      <View style={[styles.statusBadge, {backgroundColor: theme.accent}]}>
-        <Text style={[styles.statusText, {color: theme.accentForeground}]}>
+      <View 
+        style={[
+          styles.statusBadge, 
+          {backgroundColor: getStatusColor(order.status) + '20'}
+        ]}>
+        <Text style={[styles.statusText, {color: getStatusColor(order.status)}]}>
           {order.status}
         </Text>
       </View>
@@ -63,52 +75,96 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
         styles.menuItem,
         !isLast && {borderBottomWidth: 1, borderBottomColor: theme.border},
       ]}>
-      <Text style={[styles.menuItemName, {color: theme.cardForeground}]}>
-        {item.name}
-      </Text>
+      <View style={styles.menuItemLeft}>
+        <View style={[styles.menuIconContainer, {backgroundColor: theme.accent + '15'}]}>
+          <Icon name="restaurant-outline" size={16} color={theme.accent} />
+        </View>
+        <Text style={[styles.menuItemName, {color: theme.cardForeground}]}>
+          {item.name}
+        </Text>
+      </View>
       <Text style={[styles.menuItemPrice, {color: theme.primary}]}>
         ${item.price.toFixed(2)}
       </Text>
     </View>
   );
+  
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'Preparing':
+        return '#f59e0b';
+      case 'Ready':
+        return '#10b981';
+      case 'Delivered':
+        return '#6366f1';
+      default:
+        return theme.primary;
+    }
+  };
 
   return (
     <SafeAreaView
       style={[styles.container, {backgroundColor: theme.background}]}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.content}>
-          <Card title="Quick Stats">
+          <View style={styles.header}>
+            <View>
+              <Text style={[styles.welcomeText, {color: theme.mutedForeground}]}>Welcome back</Text>
+              <Text style={[styles.headerTitle, {color: theme.foreground}]}>
+                Dashboard
+              </Text>
+            </View>
+            <Button
+              label="Settings"
+              onPress={() => navigation.navigate('Settings')}
+              variant="secondary"
+              size="sm"
+              icon="settings-outline"
+            />
+          </View>
+
+          <Card title="Quick Stats" variant="glass">
             <View style={styles.statsContainer}>
-              {renderStatItem(150, 'Orders Today')}
-              {renderStatItem(formatIndianPrice(245000), 'Revenue')}
-              {renderStatItem(45, 'Active Tables')}
+              {renderStatItem(150, 'Orders Today', 'cart-outline')}
+              {renderStatItem('$2,450', 'Revenue', 'cash-outline')}
+              {renderStatItem(45, 'Active Tables', 'grid-outline')}
             </View>
           </Card>
 
           <View style={styles.gridContainer}>
             <Card style={styles.gridCard} variant="glass">
-              <Text style={[styles.gridTitle, {color: theme.cardForeground}]}>
-                Orders
-              </Text>
+              <View style={styles.gridCardHeader}>
+                <Icon name="time-outline" size={20} color={theme.primary} />
+                <Text style={[styles.gridTitle, {color: theme.cardForeground}]}>
+                  Pending Orders
+                </Text>
+              </View>
               <Text style={[styles.gridValue, {color: theme.primary}]}>24</Text>
               <Text style={[styles.gridLabel, {color: theme.mutedForeground}]}>
-                Pending
+                Awaiting preparation
               </Text>
             </Card>
             <Card style={styles.gridCard} variant="glass">
-              <Text style={[styles.gridTitle, {color: theme.cardForeground}]}>
-                Tables
-              </Text>
+              <View style={styles.gridCardHeader}>
+                <Icon name="restaurant-outline" size={20} color={theme.secondary} />
+                <Text style={[styles.gridTitle, {color: theme.cardForeground}]}>
+                  Available Tables
+                </Text>
+              </View>
               <Text style={[styles.gridValue, {color: theme.secondary}]}>
                 12
               </Text>
               <Text style={[styles.gridLabel, {color: theme.mutedForeground}]}>
-                Available
+                Ready for seating
               </Text>
             </Card>
           </View>
 
-          <Card title="Recent Orders">
+          <Card 
+            title="Recent Orders" 
+            actionLabel="View All"
+            onActionPress={() => navigation.navigate('Orders')}
+          >
             {[
               {id: 1001, table: 1, items: 2, status: 'Preparing'},
               {id: 1002, table: 2, items: 2, status: 'Ready'},
@@ -117,7 +173,6 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
               <View
                 key={order.id}
                 style={[
-                  styles.orderItem,
                   index !== array.length - 1 && {
                     borderBottomWidth: 1,
                     borderBottomColor: theme.border,
@@ -128,11 +183,15 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
             ))}
           </Card>
 
-          <Card title="Popular Items">
+          <Card 
+            title="Popular Items"
+            actionLabel="Menu"
+            onActionPress={() => {}}
+          >
             {[
-              {name: 'Chicken Burger', price: 299},
-              {name: 'Caesar Salad', price: 249},
-              {name: 'Margherita Pizza', price: 399},
+              {name: 'Chicken Burger', price: 12.99},
+              {name: 'Caesar Salad', price: 9.99},
+              {name: 'Margherita Pizza', price: 14.99},
             ].map((item, index, array) => (
               <View key={item.name}>
                 {renderMenuItem(item, index === array.length - 1)}
@@ -156,6 +215,21 @@ const styles = StyleSheet.create({
     padding: 24,
     gap: 24,
   },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  welcomeText: {
+    fontSize: 14,
+    fontFamily: 'Poppins',
+    marginBottom: 4,
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontFamily: 'Poppins-Bold',
+  },
   statsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -164,6 +238,14 @@ const styles = StyleSheet.create({
   statItem: {
     alignItems: 'center',
   },
+  statIconContainer: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
   statValue: {
     fontSize: 24,
     fontFamily: 'Poppins-Bold',
@@ -171,6 +253,7 @@ const styles = StyleSheet.create({
   statLabel: {
     fontSize: 12,
     fontFamily: 'Poppins',
+    marginTop: 2,
   },
   gridContainer: {
     flexDirection: 'row',
@@ -178,11 +261,17 @@ const styles = StyleSheet.create({
   },
   gridCard: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'flex-start',
     padding: 16,
   },
+  gridCardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 4,
+  },
   gridTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: 'Poppins-Bold',
   },
   gridValue: {
@@ -200,6 +289,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  orderItemLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  orderIconContainer: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   orderTitle: {
     fontSize: 16,
     fontFamily: 'Poppins-Bold',
@@ -209,18 +310,30 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins',
   },
   statusBadge: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 4,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 6,
   },
   statusText: {
     fontSize: 12,
-    fontFamily: 'Poppins',
+    fontFamily: 'Poppins-Medium',
   },
   menuItem: {
     paddingVertical: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  menuItemLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  menuIconContainer: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    justifyContent: 'center',
     alignItems: 'center',
   },
   menuItemName: {
