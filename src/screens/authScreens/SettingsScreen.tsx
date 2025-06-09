@@ -144,6 +144,15 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = () => {
       style={[styles.container, {backgroundColor: theme.background}]}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.content}>
+          <View style={styles.header}>
+            <Text style={[styles.headerTitle, {color: theme.foreground}]}>
+              Settings
+            </Text>
+            <Text
+              style={[styles.headerSubtitle, {color: theme.mutedForeground}]}>
+              Manage your account
+            </Text>
+          </View>
           <SettingsSection title="Appearance" icon="color-palette-outline">
             <Text
               style={[
@@ -244,9 +253,28 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
+  header: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 12,
+    marginBottom: 16,
+  },
+  headerTitle: {
+    fontSize: 28,
+    fontFamily: 'Poppins-Bold',
+    letterSpacing: 0.5,
+    marginBottom: 4,
+  },
+  headerSubtitle: {
+    fontSize: 15,
+    fontFamily: 'Poppins-Medium',
+    letterSpacing: 0.3,
+    opacity: 0.8,
+  },
   content: {
     flex: 1,
     padding: 24,
+    paddingTop: 0,
     gap: 24,
   },
   sectionCard: {

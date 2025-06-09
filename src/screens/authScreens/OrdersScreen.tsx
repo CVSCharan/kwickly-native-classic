@@ -293,8 +293,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    padding: 24,
-    paddingBottom: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 12,
+    marginBottom: 16,
   },
   headerTitle: {
     fontSize: 28,
@@ -314,6 +316,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 16,
     gap: 12,
+    justifyContent: 'center',
     alignItems: 'center',
   },
   filterChip: {

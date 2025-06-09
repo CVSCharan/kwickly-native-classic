@@ -127,6 +127,15 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
       style={[styles.container, {backgroundColor: theme.background}]}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.content}>
+          <View style={styles.header}>
+            <Text style={[styles.headerTitle, {color: theme.foreground}]}>
+              Dashboard
+            </Text>
+            <Text
+              style={[styles.headerSubtitle, {color: theme.mutedForeground}]}>
+              Manage your store
+            </Text>
+          </View>
           <Card title="Quick Stats" variant="glass">
             <View style={styles.statsContainer}>
               {renderStatItem(150, 'Orders Today', 'cart-outline')}
@@ -223,7 +232,26 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 24,
+    paddingTop: 0,
     gap: 24,
+  },
+  header: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 12,
+    marginBottom: 16,
+  },
+  headerTitle: {
+    fontSize: 28,
+    fontFamily: 'Poppins-Bold',
+    letterSpacing: 0.5,
+    marginBottom: 4,
+  },
+  headerSubtitle: {
+    fontSize: 15,
+    fontFamily: 'Poppins-Medium',
+    letterSpacing: 0.3,
+    opacity: 0.8,
   },
   statsContainer: {
     flexDirection: 'row',
