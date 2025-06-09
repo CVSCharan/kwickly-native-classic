@@ -105,15 +105,15 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
   const getStatusIcon = (status: OrderStatus) => {
     switch (status) {
       case 'Preparing':
-        return 'time-outline';
+        return 'timer';
       case 'Ready':
-        return 'checkmark-circle-outline';
+        return 'checkmark-circle';
       case 'Delivered':
-        return 'checkmark-done-outline';
+        return 'checkmark-done';
       case 'Cancelled':
-        return 'close-circle-outline';
+        return 'close-circle';
       default:
-        return 'help-circle-outline';
+        return 'help-circle';
     }
   };
 
@@ -156,11 +156,7 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
       <View style={[styles.orderDetails, {borderTopColor: theme.border}]}>
         <View style={styles.detailRow}>
           <View style={styles.detailLabelContainer}>
-            <Icon
-              name="restaurant-outline"
-              size={16}
-              color={theme.mutedForeground}
-            />
+            <Icon name="restaurant" size={16} color={theme.mutedForeground} />
             <Text style={[styles.detailLabel, {color: theme.mutedForeground}]}>
               Table
             </Text>
@@ -171,7 +167,7 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
         </View>
         <View style={styles.detailRow}>
           <View style={styles.detailLabelContainer}>
-            <Icon name="list-outline" size={16} color={theme.mutedForeground} />
+            <Icon name="list" size={16} color={theme.mutedForeground} />
             <Text style={[styles.detailLabel, {color: theme.mutedForeground}]}>
               Items
             </Text>
@@ -182,7 +178,7 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
         </View>
         <View style={styles.detailRow}>
           <View style={styles.detailLabelContainer}>
-            <Icon name="cash-outline" size={16} color={theme.mutedForeground} />
+            <Icon name="cash" size={16} color={theme.mutedForeground} />
             <Text style={[styles.detailLabel, {color: theme.mutedForeground}]}>
               Total
             </Text>
@@ -197,7 +193,7 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
         <TouchableOpacity
           style={[styles.actionButton, {borderColor: theme.border}]}
           onPress={() => {}}>
-          <Icon name="eye-outline" size={18} color={theme.foreground} />
+          <Icon name="eye" size={18} color={theme.foreground} />
           <Text style={[styles.actionText, {color: theme.foreground}]}>
             View Details
           </Text>
@@ -209,7 +205,7 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
             {borderColor: theme.border, backgroundColor: theme.primary + '10'},
           ]}
           onPress={() => {}}>
-          <Icon name="print-outline" size={18} color={theme.primary} />
+          <Icon name="print" size={18} color={theme.primary} />
           <Text style={[styles.actionText, {color: theme.primary}]}>
             Print Receipt
           </Text>
@@ -258,7 +254,7 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
     <SafeAreaView
       style={[styles.container, {backgroundColor: theme.background}]}>
       <View style={[styles.searchContainer, {backgroundColor: theme.card}]}>
-        <Icon name="search-outline" size={20} color={theme.mutedForeground} />
+        <Icon name="search" size={20} color={theme.mutedForeground} />
         <TextInput
           style={[styles.searchInput, {color: theme.foreground}]}
           placeholder="Search orders..."
@@ -268,11 +264,7 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
         />
         {searchQuery !== '' && (
           <TouchableOpacity onPress={() => setSearchQuery('')}>
-            <Icon
-              name="close-circle-outline"
-              size={20}
-              color={theme.mutedForeground}
-            />
+            <Icon name="close-circle" size={20} color={theme.mutedForeground} />
           </TouchableOpacity>
         )}
       </View>
