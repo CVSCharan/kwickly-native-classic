@@ -30,24 +30,15 @@ export const TabNavigator = () => {
         tabBarStyle: {
           backgroundColor: theme.background,
           borderTopColor: theme.border,
-          height: Platform.OS === 'ios' ? 84 : 56,
-          paddingBottom: Platform.OS === 'ios' ? 24 : 4,
-          paddingTop: 4,
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: -2,
-          },
-          shadowOpacity: 0.1,
-          shadowRadius: 4,
-          elevation: 8,
+          height: Platform.OS === 'ios' ? 88 : 60,
+          paddingBottom: Platform.OS === 'ios' ? 28 : 8,
+          paddingTop: 8,
         },
         tabBarActiveTintColor: theme.primary,
         tabBarInactiveTintColor: theme.mutedForeground,
         tabBarLabelStyle: {
-          fontFamily: 'Poppins-Medium',
-          fontSize: 11,
-          marginTop: -4,
+          fontFamily: 'Poppins',
+          fontSize: 12,
         },
       }}>
       <Tab.Screen

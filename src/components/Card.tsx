@@ -31,16 +31,8 @@ export const Card: React.FC<CardProps> = ({
     styles.card,
     {
       backgroundColor:
-        variant === 'glass' ? 'rgba(255, 255, 255, 0.05)' : theme.card,
+        variant === 'glass' ? 'rgba(255, 255, 255, 0.1)' : theme.card,
       borderColor: theme.border,
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 1,
-      },
-      shadowOpacity: 0.1,
-      shadowRadius: 3,
-      elevation: 2,
     },
     style,
   ];
@@ -68,9 +60,17 @@ export const Card: React.FC<CardProps> = ({
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 4,
-    borderWidth: 1,
     padding: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
   },
   header: {
     flexDirection: 'row',
@@ -80,8 +80,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontFamily: 'Poppins-SemiBold',
-    letterSpacing: 0.2,
+    fontFamily: 'Poppins-Bold',
   },
   action: {
     fontSize: 14,
