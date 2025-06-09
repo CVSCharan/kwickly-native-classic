@@ -52,7 +52,7 @@ const SettingsSection: React.FC<SettingsSectionProps> = ({
   );
 };
 
-export const SettingsScreen: React.FC<SettingsScreenProps> = ({navigation}) => {
+export const SettingsScreen: React.FC<SettingsScreenProps> = () => {
   const {theme, mode, setMode} = useThemeStore();
   const logout = useAuthStore(state => state.logout);
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);

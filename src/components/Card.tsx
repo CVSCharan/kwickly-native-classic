@@ -1,19 +1,29 @@
 import React from 'react';
-import {View, Text, ViewStyle, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  ViewStyle,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import {useThemeStore} from '../store/useThemeStore';
 
-type CardProps = {
+interface CardProps {
   children: React.ReactNode;
   title?: string;
   style?: ViewStyle;
   variant?: 'default' | 'glass';
-};
+  actionLabel?: string;
+  onActionPress?: () => void;
+}
 
 export const Card: React.FC<CardProps> = ({
   children,
   title,
   style,
   variant = 'default',
+  actionLabel,
+  onActionPress,
 }) => {
   const theme = useThemeStore(state => state.theme);
 
@@ -29,10 +39,19 @@ export const Card: React.FC<CardProps> = ({
 
   return (
     <View style={cardStyle}>
-      {title && (
-        <Text style={[styles.title, {color: theme.cardForeground}]}>
-          {title}
-        </Text>
+      {(title || actionLabel) && (
+        <View style={styles.header}>
+          <Text style={[styles.title, {color: theme.cardForeground}]}>
+            {title}
+          </Text>
+          {actionLabel && onActionPress && (
+            <TouchableOpacity onPress={onActionPress}>
+              <Text style={[styles.action, {color: theme.primary}]}>
+                {actionLabel}
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
       )}
       {children}
     </View>
@@ -53,9 +72,18 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
   },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
   title: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: 'Poppins-Bold',
-    marginBottom: 8,
+  },
+  action: {
+    fontSize: 14,
+    fontFamily: 'Poppins-Medium',
   },
 });
