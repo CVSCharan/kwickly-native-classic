@@ -4,6 +4,7 @@ import {useThemeStore} from '../store/useThemeStore';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {LandingStackParamList} from '../navigation/types';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {useThemeAssets} from '../hooks/useThemeAssets';
 
 type WelcomeScreenProps = {
   navigation: NativeStackNavigationProp<LandingStackParamList, 'Welcome'>;
@@ -11,6 +12,7 @@ type WelcomeScreenProps = {
 
 export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({navigation}) => {
   const {theme} = useThemeStore();
+  const {logo} = useThemeAssets();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -18,18 +20,14 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({navigation}) => {
     }, 3000); // 3 seconds delay
 
     return () => clearTimeout(timer); // Clean up the timer on unmount
-  }, []);
+  }, [navigation]);
 
   return (
     <SafeAreaView
       style={[styles.container, {backgroundColor: theme.background}]}>
       <View style={styles.content}>
         <View style={styles.logoContainer}>
-          <Image
-            source={require('../../assets/logos/kwickly-light-bold-logo.png')}
-            style={styles.logo}
-            resizeMode="contain"
-          />
+          <Image source={logo} style={styles.logo} resizeMode="contain" />
         </View>
       </View>
     </SafeAreaView>

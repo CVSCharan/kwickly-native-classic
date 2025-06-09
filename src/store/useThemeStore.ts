@@ -9,12 +9,16 @@ interface ThemeState {
   systemIsDark: boolean;
   setMode: (mode: ThemeMode) => void;
   updateSystemTheme: (isDark: boolean) => void;
+  lightTheme: typeof lightTheme;
+  darkTheme: typeof darkTheme;
 }
 
 export const useThemeStore = create<ThemeState>((set, get) => ({
   mode: 'system',
   theme: lightTheme,
   systemIsDark: false,
+  lightTheme,
+  darkTheme,
 
   setMode: mode => {
     const {systemIsDark} = get();

@@ -15,6 +15,7 @@ import {Button} from '../components/Button';
 import {Card} from '../components/Card';
 import {useThemeStore} from '../store/useThemeStore';
 import {useAuthStore} from '../store/useAuthStore';
+import {useThemeAssets} from '../hooks/useThemeAssets';
 
 type LoginScreenProps = {
   navigation: NativeStackNavigationProp<LandingStackParamList, 'Login'>;
@@ -23,6 +24,7 @@ type LoginScreenProps = {
 export const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
   const theme = useThemeStore(state => state.theme);
   const login = useAuthStore(state => state.login);
+  const {logo} = useThemeAssets();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -58,11 +60,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
       <View style={styles.content}>
         <View style={styles.header}>
           <View style={styles.logoContainer}>
-            <Image
-              source={require('../../assets/logos/kwickly-light-bold-logo.png')}
-              style={styles.logo}
-              resizeMode="contain"
-            />
+            <Image source={logo} style={styles.logo} resizeMode="contain" />
           </View>
           <Text style={[styles.subtitle, {color: theme.mutedForeground}]}>
             Sign in to your account to continue
