@@ -15,6 +15,7 @@ import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AuthStackParamList, TabParamList} from '../../navigation/types';
 import {formatIndianPrice} from '../../utils/currency';
+import {MenuButton} from '../../components/MenuButton';
 
 type OrdersScreenProps = {
   navigation: CompositeNavigationProp<
@@ -250,6 +251,7 @@ export const OrdersScreen: React.FC<OrdersScreenProps> = () => {
   return (
     <SafeAreaView
       style={[styles.container, {backgroundColor: theme.background}]}>
+      <MenuButton />
       <View style={styles.header}>
         <Text style={[styles.headerTitle, {color: theme.foreground}]}>
           Orders

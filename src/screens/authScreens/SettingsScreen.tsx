@@ -16,6 +16,7 @@ import {CompositeNavigationProp} from '@react-navigation/native';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AuthStackParamList, TabParamList} from '../../navigation/types';
+import {MenuButton} from '../../components/MenuButton';
 
 type SettingsScreenProps = {
   navigation: CompositeNavigationProp<
@@ -142,6 +143,7 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = () => {
   return (
     <SafeAreaView
       style={[styles.container, {backgroundColor: theme.background}]}>
+      <MenuButton />
       <ScrollView style={styles.scrollView}>
         <View style={styles.content}>
           <View style={styles.header}>

@@ -8,6 +8,7 @@ import {CompositeNavigationProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {AuthStackParamList, TabParamList} from '../../navigation/types';
+import {MenuButton} from '../../components/MenuButton';
 
 type DashboardScreenProps = {
   navigation: CompositeNavigationProp<
@@ -125,6 +126,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   return (
     <SafeAreaView
       style={[styles.container, {backgroundColor: theme.background}]}>
+      <MenuButton />
       <ScrollView style={styles.scrollView}>
         <View style={styles.content}>
           <View style={styles.header}>
