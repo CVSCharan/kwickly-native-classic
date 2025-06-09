@@ -18,28 +18,30 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({navigation}) => {
         <View className="items-center space-y-6 w-full max-w-sm">
           {/* Logo placeholder - replace with your actual logo */}
           <View className="h-24 w-24 rounded-full bg-primary items-center justify-center mb-4">
-            <Text className="text-3xl font-bold text-primary-foreground">K</Text>
+            <Text className="text-3xl font-bold text-primary-foreground">
+              K
+            </Text>
           </View>
-          
+
           <View className="items-center space-y-2">
             <Text className="text-4xl font-bold text-foreground">Kwickly</Text>
             <Text className="text-xl text-muted-foreground text-center">
               Restaurant POS Admin
             </Text>
           </View>
-          
+
           <View className="w-full space-y-4 mt-8">
-            <Button 
-              label="Get Started" 
-              onPress={() => navigation.navigate('Login')} 
+            <Button
+              label="Get Started"
+              onPress={() => navigation.navigate('Login')}
               variant="primary"
               size="lg"
               fullWidth
             />
-            
-            <Button 
-              label="Toggle Theme" 
-              onPress={toggleTheme} 
+
+            <Button
+              label="Toggle Theme"
+              onPress={toggleTheme}
               variant="outline"
               size="md"
               fullWidth
