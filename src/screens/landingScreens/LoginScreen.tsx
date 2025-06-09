@@ -102,6 +102,28 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
             fullWidth
             size="lg"
           />
+
+          <View style={styles.dividerContainer}>
+            <View style={[styles.divider, {backgroundColor: theme.border}]} />
+            <Text style={[styles.dividerText, {color: theme.mutedForeground}]}>
+              or
+            </Text>
+            <View style={[styles.divider, {backgroundColor: theme.border}]} />
+          </View>
+
+          <TouchableOpacity
+            style={[styles.googleButton, {borderColor: theme.border}]}
+            onPress={() => {
+              /* Google auth logic here */
+            }}>
+            <Image
+              source={require('../../assets/images/google.png')}
+              style={styles.googleIcon}
+            />
+            <Text style={[styles.googleButtonText, {color: theme.foreground}]}>
+              Continue with Google
+            </Text>
+          </TouchableOpacity>
         </Card>
 
         <View style={styles.footer}>
@@ -137,6 +159,7 @@ const styles = StyleSheet.create({
     height: 100,
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 16,
   },
   logo: {
     width: '100%',
@@ -151,17 +174,53 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Poppins',
     textAlign: 'center',
+    letterSpacing: 0.3,
   },
   card: {
     padding: 24,
+    gap: 16,
   },
   forgotPassword: {
     alignSelf: 'flex-end',
-    marginBottom: 16,
+    marginBottom: 8,
   },
   forgotPasswordText: {
     fontSize: 14,
     fontFamily: 'Poppins',
+    letterSpacing: 0.2,
+  },
+  dividerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 8,
+  },
+  divider: {
+    flex: 1,
+    height: 1,
+  },
+  dividerText: {
+    marginHorizontal: 16,
+    fontSize: 14,
+    fontFamily: 'Poppins',
+    letterSpacing: 0.2,
+  },
+  googleButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 14,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    gap: 12,
+  },
+  googleIcon: {
+    width: 24,
+    height: 24,
+  },
+  googleButtonText: {
+    fontSize: 15,
+    fontFamily: 'Poppins-Medium',
+    letterSpacing: 0.3,
   },
   footer: {
     flexDirection: 'row',
@@ -171,9 +230,11 @@ const styles = StyleSheet.create({
   footerText: {
     fontSize: 14,
     fontFamily: 'Poppins',
+    letterSpacing: 0.2,
   },
   signUpText: {
     fontSize: 14,
     fontFamily: 'Poppins-Bold',
+    letterSpacing: 0.2,
   },
 });

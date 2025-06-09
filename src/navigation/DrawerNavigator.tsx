@@ -117,14 +117,15 @@ export const DrawerNavigator = () => {
         drawerActiveTintColor: theme.primary,
         drawerInactiveTintColor: theme.foreground,
         drawerItemStyle: {
-          borderRadius: wp('2%'),
-          paddingHorizontal: wp('2%'),
+          borderRadius: 12,
+          paddingHorizontal: wp('4%'),
           marginHorizontal: wp('3%'),
         },
         drawerLabelStyle: {
           fontFamily: 'Poppins-Medium',
           fontSize: wp('3.8%'),
-          marginLeft: -wp('4%'),
+          marginLeft: wp('4%'),
+          letterSpacing: 0.3,
         },
       }}
       drawerContent={props => <CustomDrawerContent {...props} />}>
@@ -168,6 +169,7 @@ const styles = StyleSheet.create({
   },
   drawerHeader: {
     padding: wp('6%'),
+    paddingBottom: hp('2%'),
   },
   logoContainer: {
     width: wp('30%'),
@@ -183,21 +185,23 @@ const styles = StyleSheet.create({
     fontSize: wp('5%'),
     fontFamily: 'Poppins-Bold',
     marginBottom: hp('0.5%'),
+    letterSpacing: 0.3,
   },
   restaurantAddress: {
     fontSize: wp('3.5%'),
     fontFamily: 'Poppins-Medium',
+    letterSpacing: 0.2,
   },
   drawerSection: {
     paddingTop: hp('2%'),
-    borderTopWidth: 1,
+    borderTopWidth: 1.5,
   },
   drawerSectionTitle: {
     fontSize: wp('3%'),
     fontFamily: 'Poppins-SemiBold',
     letterSpacing: 1.2,
     paddingHorizontal: wp('6%'),
-    marginBottom: hp('1%'),
+    marginBottom: hp('1.5%'),
   },
   drawerItem: {
     flexDirection: 'row',
@@ -205,12 +209,13 @@ const styles = StyleSheet.create({
     padding: wp('4%'),
     paddingHorizontal: wp('6%'),
     marginHorizontal: wp('3%'),
-    borderRadius: wp('2%'),
+    borderRadius: 12,
+    gap: wp('4%'),
   },
   drawerItemText: {
-    marginLeft: wp('4%'),
     fontSize: wp('3.8%'),
     fontFamily: 'Poppins-Medium',
+    letterSpacing: 0.3,
   },
   logoutButton: {
     flexDirection: 'row',
@@ -218,11 +223,12 @@ const styles = StyleSheet.create({
     padding: wp('4%'),
     paddingHorizontal: wp('6%'),
     marginTop: 'auto',
-    borderTopWidth: 1,
+    borderTopWidth: 1.5,
+    gap: wp('4%'),
   },
   logoutText: {
-    marginLeft: wp('4%'),
     fontSize: wp('3.8%'),
     fontFamily: 'Poppins-SemiBold',
+    letterSpacing: 0.3,
   },
 });
