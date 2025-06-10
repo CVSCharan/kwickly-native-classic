@@ -1,15 +1,14 @@
 import {useEffect} from 'react';
-import {Platform} from 'react-native';
-import Orientation from 'react-native-orientation-locker';
+import {orientationService} from '../services/OrientationService';
 
 export const useOrientationLock = () => {
   useEffect(() => {
     // Lock to portrait on mount
-    Orientation.lockToPortrait();
+    orientationService.lockToPortrait();
 
     return () => {
-      // Unlock when component unmounts (optional, depending on your app's needs)
-      // Orientation.unlockAllOrientations();
+      // Optionally unlock when component unmounts
+      // orientationService.unlockAllOrientations();
     };
   }, []);
 };
