@@ -1,16 +1,18 @@
 import React, {useEffect} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 import {useThemeStore} from '../../store/useThemeStore';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {LandingStackParamList} from '../../navigation/types';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useThemeAssets} from '../../hooks/useThemeAssets';
+import {useOrientationLock} from '../../hooks/useOrientationLock';
 
 type WelcomeScreenProps = {
   navigation: NativeStackNavigationProp<LandingStackParamList, 'Welcome'>;
 };
 
 export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({navigation}) => {
+  useOrientationLock();
   const {theme} = useThemeStore();
   const {logo} = useThemeAssets();
 

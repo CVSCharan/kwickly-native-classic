@@ -17,12 +17,14 @@ import {Card} from '../../components/Card';
 import {useThemeStore} from '../../store/useThemeStore';
 import {useAuthStore} from '../../store/useAuthStore';
 import {useThemeAssets} from '../../hooks/useThemeAssets';
+import {useOrientationLock} from '../../hooks/useOrientationLock';
 
 type LoginScreenProps = {
   navigation: NativeStackNavigationProp<LandingStackParamList, 'Login'>;
 };
 
 export const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
+  useOrientationLock();
   const theme = useThemeStore(state => state.theme);
   const login = useAuthStore(state => state.login);
   const {logo} = useThemeAssets();

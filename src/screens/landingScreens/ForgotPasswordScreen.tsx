@@ -9,6 +9,7 @@ import {Card} from '../../components/Card';
 import {useThemeStore} from '../../store/useThemeStore';
 import {useThemeAssets} from '../../hooks/useThemeAssets';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useOrientationLock} from '../../hooks/useOrientationLock';
 
 type ForgotPasswordScreenProps = {
   navigation: NativeStackNavigationProp<
@@ -20,6 +21,7 @@ type ForgotPasswordScreenProps = {
 export const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({
   navigation,
 }) => {
+  useOrientationLock();
   const theme = useThemeStore(state => state.theme);
   const {logo} = useThemeAssets();
   const [email, setEmail] = useState('');
